@@ -15,5 +15,5 @@ import java.io.Serializable;
 public class Administrador extends Cuenta implements Serializable {
 
     @Id
-    private String codigo;
+    private int codigo;
 }
