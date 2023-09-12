@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyecto.modelo.entidades;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.core.codec.StringDecoder;
 
 import java.io.Serializable;
 
@@ -11,18 +12,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Usuario extends Cuenta implements Serializable {
+public class Atencion implements Serializable {
     //LLAVE PRIMARIA
     @Id
-    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
-
-    private String cedula;
-    private String nombre;
-    private int telefono;
-    private String url_foto;
+    private String diagnostico;
+    private String tratamiento;
+    private String notas_medicas;
 
     //LLAVES FORANEAS
-    private Ciudad codigo_ciudad;
+    @OneToOne
+    private Cita codigo_cita;
 }

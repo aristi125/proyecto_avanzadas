@@ -11,18 +11,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Usuario extends Cuenta implements Serializable {
+public class Mensaje implements Serializable {
     //LLAVE PRIMARIA
     @Id
-    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
-
-    private String cedula;
-    private String nombre;
-    private int telefono;
-    private String url_foto;
+    private String fecha_creacion;
+    private String mensaje;
 
     //LLAVES FORANEAS
-    private Ciudad codigo_ciudad;
+    @ManyToOne
+    private PQRS codigo_pqrs;
+    @ManyToOne
+    private Cuenta cuenta_codigo;
+    @OneToOne
+    private Mensaje codigo_mensaje;
 }
