@@ -1,7 +1,8 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
+import co.edu.uniquindio.proyecto.modelo.enumeracion.EPS;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Tipo_Sangre;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 
@@ -14,11 +15,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Paciente extends Usuario implements Serializable {
     //LLAVE PRIMARIA
-    @Id
-    private String codigo;
+
     private LocalDateTime fecha_nacimiento;
     private String alergias;
 

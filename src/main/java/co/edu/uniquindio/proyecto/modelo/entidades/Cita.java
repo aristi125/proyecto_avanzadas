@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado_Cita;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +29,7 @@ public class Cita implements Serializable {
     private Medico codigo_medico;
     //PREGUNTAR COMO RELACIONARLO
     private Estado_Cita codigo_estado;
-    @OneToOne
+    @OneToOne(mappedBy = "codigo_cita")
     private Atencion atencion;
     @OneToMany(mappedBy = "codigo_cita")
     private List<PQRS> pqrsList;

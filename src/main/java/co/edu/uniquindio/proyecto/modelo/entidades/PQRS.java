@@ -1,10 +1,11 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado_PQRS;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.repository.cdi.Eager;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class PQRS implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
-    private String fecha_ceacion;
+    private LocalDate fecha_ceacion;
     private String tipo;
     private String motivo;
 

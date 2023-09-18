@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -15,7 +18,7 @@ public class Dia_libre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
-    private String dia;
+    private LocalDate dia;
     //LLAVES FORANEAS
     @ManyToOne
     private Medico codigo_medico;

@@ -13,10 +13,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Administrador extends Cuenta implements Serializable {
 
-    //LLAVE PRIMARIA
-    @Id
-    private int codigo;
 }

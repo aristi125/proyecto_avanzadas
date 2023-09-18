@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Ciudad;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,13 +11,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Usuario extends Cuenta implements Serializable {
-    //LLAVE PRIMARIA
-    @Id
-    @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codigo;
 
     private String cedula;
     private String nombre;

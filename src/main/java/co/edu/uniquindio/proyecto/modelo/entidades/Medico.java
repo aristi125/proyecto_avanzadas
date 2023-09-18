@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Especialidad;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,12 +11,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Medico extends Usuario implements Serializable {
-    //LLAVE PRIMARIA
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codigo;
+
     //LLAVES FORANEAS
     private Especialidad codigo_especialidad;
 
