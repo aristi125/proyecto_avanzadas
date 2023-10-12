@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyecto.modelo.enumeracion;
 
-public enum Tipo_Sangre {
+public enum TipoSangre {
     A_POSITIVO,
     A_NEGATIVO,
     B_POSITIVO,

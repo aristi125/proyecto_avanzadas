@@ -14,12 +14,12 @@ import java.util.List;
 public class Medico extends Usuario implements Serializable {
 
     //LLAVES FORANEAS
-    private Especialidad codigo_especialidad;
+    private Especialidad especialidad;
 
-    @OneToMany(mappedBy ="codigo_medico" )
+    @OneToMany(mappedBy = "medico")
     private List<Cita> citaMedicoList;
-    @OneToMany(mappedBy = "codigo_medico")
-    private List<Dia_libre> dia_libreList;
-    @OneToMany(mappedBy = "codigo_medico")
-    private List<Horario> horarioList;
+    @OneToMany(mappedBy = "codigoMedico")
+    private List<DiaLibre> dia_libreList;
+    @OneToMany(mappedBy = "codigoMedico")
+    private List<HorarioMedico> horarioMedicoList;
 }

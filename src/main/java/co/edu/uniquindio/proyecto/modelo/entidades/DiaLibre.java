@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -13,13 +12,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Dia_libre implements Serializable {
+public class DiaLibre implements Serializable {
     //LLAVE PRIMARIA
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
+    @Column(nullable = false)
     private LocalDate dia;
     //LLAVES FORANEAS
     @ManyToOne
-    private Medico codigo_medico;
+    private Medico codigoMedico;
 }

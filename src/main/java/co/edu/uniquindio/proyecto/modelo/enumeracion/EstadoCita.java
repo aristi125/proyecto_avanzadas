@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyecto.modelo.enumeracion;
 
-public enum Estado_Cita {
+public enum EstadoCita {
     EN_PROGRESO,
     ESTEPRA,
     ATENTIDO

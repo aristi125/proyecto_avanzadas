@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyecto.modelo.enumeracion;
 
-public enum Estado_PQRS {
+public enum EstadoPQRS {
     APROBADO ("Aprobado"),
     RECHAZADO ("Rechazado"),
     EN_PROCESO ("En proceso"),
@@ -8,7 +8,7 @@ public enum Estado_PQRS {
 
     private final String estadoPQR;
 
-    Estado_PQRS(String estadoPQR) {
+    EstadoPQRS(String estadoPQR) {
         this.estadoPQR = estadoPQR;
     }
 

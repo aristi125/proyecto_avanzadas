@@ -1,10 +1,11 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
-import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado_Cita;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,19 +19,22 @@ public class Cita implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
-    private String fecha_creacion;
-    private String frcha_cita;
+    @Column(nullable = false)
+    private LocalDateTime fechaCreacion;
+    @Column(nullable = false)
+    private LocalDateTime fechaCita;
+    @Column(nullable = false, length = 200)
     private String motivo;
 
     //LLAVES FORANEAS
     @ManyToOne
-    private Paciente cedula_paciente;
+    private Paciente paciente;
     @ManyToOne
-    private Medico codigo_medico;
+    private Medico medico;
     //PREGUNTAR COMO RELACIONARLO
-    private Estado_Cita codigo_estado;
-    @OneToOne(mappedBy = "codigo_cita")
+    private EstadoCita estado;
+    @OneToOne(mappedBy = "codigoCita")
     private Atencion atencion;
-    @OneToMany(mappedBy = "codigo_cita")
+    @OneToMany(mappedBy = "cita")
     private List<PQRS> pqrsList;
 }

@@ -17,11 +17,14 @@ public class Atencion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
+    @Column(nullable = false, length = 200)
     private String diagnostico;
+    @Column(length = 200)
     private String tratamiento;
-    private String notas_medicas;
+    @Column(length = 200)
+    private String notasMedicas;
 
     //LLAVES FORANEAS
     @OneToOne
-    private Cita codigo_cita;
+    private Cita codigoCita;
 }
