@@ -1,8 +1,13 @@
 package co.edu.uniquindio.proyecto.modelo.repositorios;
 
+import co.edu.uniquindio.proyecto.modelo.entidades.Cita;
 import co.edu.uniquindio.proyecto.modelo.entidades.Medico;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface MedicoRepo extends JpaRepository<Medico, Integer> {
@@ -18,4 +23,7 @@ public interface MedicoRepo extends JpaRepository<Medico, Integer> {
 
     ///OTRA FORMA
     Medico findByCorreo(String correo);
+
+    @Query("select c.motivo, c.atencion.notasMedicas, c.atencion.tratamiento from Cita c where c.estado =: estado")
+    List<Cita> listarCitasSegunEstado(EstadoCita estado);
 }

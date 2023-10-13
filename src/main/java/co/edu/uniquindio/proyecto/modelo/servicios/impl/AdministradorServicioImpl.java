@@ -20,19 +20,18 @@ import java.util.Optional;
 @RequiredArgsConstructor //CREA EL CONSTRUTOR DE TODOS LOS METODOS
 public class AdministradorServicioImpl implements AdministradorServicio {
 
-    //
-    @Autowired
     private final MedicoRepo medicoRepo;
-    @Autowired
+
     private final PQRSRepo pqrsRepo;
-    @Autowired
+
     private final CuentaRepo cuentaRepo;
-    @Autowired
+
     private final MensajeRepo mensajeRepo;
-    @Autowired
+
     private final CitaRepo citaRepo;
-    @Autowired
+
     private final HorarioRepo horarioRepo;
+    //=======================================================
     @Override
     public int crearMedico(RegistroMedicoDTO medicoDTO) throws Exception {
         if(estaRepetidoCorreo(medicoDTO.correo())){
