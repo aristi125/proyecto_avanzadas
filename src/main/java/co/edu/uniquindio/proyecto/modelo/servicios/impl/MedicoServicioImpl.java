@@ -1,15 +1,12 @@
 package co.edu.uniquindio.proyecto.modelo.servicios.impl;
 
-import co.edu.uniquindio.proyecto.dto.medico.AtenderConsultaPacienteDTO;
-import co.edu.uniquindio.proyecto.dto.medico.DiaLibreDTO;
-import co.edu.uniquindio.proyecto.dto.medico.ItemCitasActualDTOMedico;
-import co.edu.uniquindio.proyecto.dto.medico.ItemCitasPendienteDTOMedico;
+import co.edu.uniquindio.proyecto.dto.medico.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.*;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import co.edu.uniquindio.proyecto.modelo.repositorios.*;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.MedicoServicio;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,16 +17,21 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor // CREA EL CONSTRUCTOR DE TODOS LOS METODOS
 public class MedicoServicioImpl implements MedicoServicio {
+    @Autowired
     private final PacienteRepo pacienteRepo;
+    @Autowired
     private  final CitaRepo citaRepo;
+    @Autowired
     private final MedicoRepo medicoRepo;
+    @Autowired
     private final AtencionRepo atencionRepo;
+    @Autowired
     private final DiaLibreRepo diaLibreRepo;
-
+    List<Cita> citasHistorial= null;
     //========================================
     @Override
     public List<ItemCitasPendienteDTOMedico> listarCitasPendientes(int codigo) throws Exception {
-        List<Cita> citas = citaRepo.obtenerCitasMedico(codigo, EstadoCita.ATENTIDO);
+        List<Cita> citas = citaRepo.obtenerCitasMedico(codigo, EstadoCita.COMPLETA);
         if (citas.isEmpty()){
             throw new Exception("No hay citas registradas");
         }
@@ -71,8 +73,30 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
 
     @Override
-    public List<ItemCitasPendienteDTOMedico> listasCitasPaciente() throws Exception {
-        return null;
+    public List<HistorialPacienteDTO> listasUnaCitasPaciente(int codigo) throws Exception {
+        List<Cita> citasHistorial = citaRepo.obtenerHistorialPaciente(codigo);
+        Optional<Paciente> opcional = pacienteRepo.findById(codigo);
+        if (citasHistorial.isEmpty()){
+            throw new Exception("El paciente con el codigo "+codigo+" no a registrado citas");
+        }
+        Paciente paciente = opcional.get();
+        List<HistorialPacienteDTO> respuesta = new ArrayList<>();
+        if (paciente.equals(citasHistorial) && (paciente.getEstadoCita().equals(EstadoCita.COMPLETA))) {
+            for (Cita c : citasHistorial) {
+                respuesta.add(new HistorialPacienteDTO(
+                   c.getCodigo(),
+                   c.getPaciente().getNombre(),
+                   c.getPaciente().getCedula(),
+                   c.getAtencion().getTratamiento(),
+                   c.getAtencion().getDiagnostico(),
+                   c.getAtencion().getNotasMedicas(),
+                   c.getMotivo()
+                ));
+            }
+        }else {
+            throw new Exception("El pacietne no tiene historial creado");
+        }
+        return respuesta;
     }
 
     @Override
@@ -95,10 +119,48 @@ public class MedicoServicioImpl implements MedicoServicio {
 
     }
 
+    //NO SE SI SE VAYA A UTILIZAR
     @Override
     public List<Cita> listarCitasPorEstado(EstadoCita estado) throws Exception{
         return null;
     }
 
+    @Override
+    public List<HistorialPacienteDTO> listarTodasCitasPacientes(int codigo) throws Exception {
+        //List<Cita> citasHistorial = citaRepo.obtenerHistorialPaciente(codigo, EstadoCita.COMPLETA);
+        Optional<Paciente> opcional = pacienteRepo.findById(codigo);
+        if (!verificarCitasPacientes(codigo)){
+            throw new Exception("El paciente con el codigo "+codigo+" no a registrado citas");
+        }
+//        if (citasHistorial.isEmpty()){
+//            throw new Exception("El paciente con el codigo "+codigo+" no a registrado citas");
+//        }
+        Paciente paciente = opcional.get();
+        List<HistorialPacienteDTO> respuesta = new ArrayList<>();
+
+        if(paciente.getEstadoCita().equals(EstadoCita.COMPLETA)) {
+            for (Cita c : citasHistorial) {
+                respuesta.add(new HistorialPacienteDTO(
+                        c.getCodigo(),
+                        c.getPaciente().getNombre(),
+                        c.getPaciente().getCedula(),
+                        c.getAtencion().getTratamiento(),
+                        c.getAtencion().getDiagnostico(),
+                        c.getAtencion().getNotasMedicas(),
+                        c.getMotivo()
+                ));
+            }
+        }
+
+        return respuesta;
+    }
+    public boolean verificarCitasPacientes(int codigo) throws Exception{
+        List<Cita> citasHistorial = citaRepo.obtenerHistorialPaciente(codigo);
+        Optional<Paciente> opcional = pacienteRepo.findById(codigo);
+        if (citasHistorial.isEmpty()){
+            return false;
+        }
+        return true;
+    }
 
 }

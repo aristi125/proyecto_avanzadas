@@ -19,17 +19,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor //CREA EL CONSTRUTOR DE TODOS LOS METODOS
 public class AdministradorServicioImpl implements AdministradorServicio {
-
+    @Autowired
     private final MedicoRepo medicoRepo;
-
+    @Autowired
     private final PQRSRepo pqrsRepo;
-
+    @Autowired
     private final CuentaRepo cuentaRepo;
-
+    @Autowired
     private final MensajeRepo mensajeRepo;
-
+    @Autowired
     private final CitaRepo citaRepo;
-
+    @Autowired
     private final HorarioRepo horarioRepo;
     //=======================================================
     @Override

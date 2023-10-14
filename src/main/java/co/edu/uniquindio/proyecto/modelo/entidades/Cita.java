@@ -32,6 +32,7 @@ public class Cita implements Serializable {
     @ManyToOne
     private Medico medico;
     //PREGUNTAR COMO RELACIONARLO
+    @Enumerated(EnumType.STRING)
     private EstadoCita estado;
     @OneToOne(mappedBy = "codigoCita")
     private Atencion atencion;
