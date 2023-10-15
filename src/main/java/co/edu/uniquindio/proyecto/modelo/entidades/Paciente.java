@@ -26,12 +26,23 @@ public class Paciente extends Usuario implements Serializable {
     private String alergias;
 
     //LLAVES FORANEAS
-    private EPS codigoEps;
+    private EPS eps;
     private EstadoCita estadoCita;
     @Column(nullable = false)
-    private TipoSangre codigoTipoSangre;
+    private TipoSangre tipoSangre;
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citaPacienteList;
 
-
+    @Override
+    public String toString() {
+        return "Paciente{" +
+                "fechaNacimiento=" + fechaNacimiento +
+                ", fechaCreacionCita=" + fechaCreacionCita +
+                ", alergias='" + alergias + '\'' +
+                ", eps=" + eps +
+                ", estadoCita=" + estadoCita +
+                ", tipoSangre=" + tipoSangre +
+                ", citaPacienteList=" + citaPacienteList +
+                '}';
+    }
 }

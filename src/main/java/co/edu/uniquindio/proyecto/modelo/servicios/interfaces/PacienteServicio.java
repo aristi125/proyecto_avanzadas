@@ -31,6 +31,7 @@ public interface PacienteServicio {
     void filtrarCitasPorFecha() throws Exception;
 
     void filtrarCitasPorMedico() throws Exception;
+    DetatellePacienteDTO verDetallePaciente(int codigo) throws Exception;
 
-    List<ItemPacienteDTO> verDetalleCita() throws Exception;
+    List<ItemPacienteDTO> verHistorialCita() throws Exception;
 }

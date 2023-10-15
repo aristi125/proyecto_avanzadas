@@ -43,7 +43,7 @@ public class MedicoServicioImpl implements MedicoServicio {
                     c.getPaciente().getNombre(),
                     c.getPaciente().getUrlFoto(),
                     c.getFechaCita(),
-                    c.getPaciente().getCodigoEps(),
+                    c.getPaciente().getEps(),
                     c.getEstado()
             ));
         }

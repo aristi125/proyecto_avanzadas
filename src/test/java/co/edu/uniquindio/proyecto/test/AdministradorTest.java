@@ -45,7 +45,6 @@ public class AdministradorTest {
         }
     }
     @Test
-    //@Sql("dataset.sql")
     public void actualizarMedicoTest(){
         DetalleMedicoDTO medicoDTO = new DetalleMedicoDTO(1,"Camilo", "1234567890", Ciudad.ARMENIA, Especialidad.NEUTROLOGIA,
                 "3116674102","camilo@gmail.com", "ssss",null );
