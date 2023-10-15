@@ -1,29 +1,36 @@
 package co.edu.uniquindio.proyecto.modelo.servicios.interfaces;
 
+import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
+import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
+import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
+import co.edu.uniquindio.proyecto.dto.paciente.*;
+
+import java.util.List;
+
 public interface PacienteServicio {
-    void registrarse();
+    int registrarse(RegistroPacienteDTO registroPacienteDTO) throws Exception;
 
-    void editarPerfil();
+    int editarPerfil(DetatellePacienteDTO detatellePacienteDTO) throws Exception;
 
-    void eliminarCuenta();
+    void eliminarCuenta(int codigo) throws Exception;
 
-    void enviarLinkRecuperacion();
+    void enviarLinkRecuperacion(RecupararPasswordPacienteDTO passwordPacienteDTO) throws Exception;
 
-    void cambiarPassword();
+    void cambiarPassword() throws Exception;
 
-    void agendarCita();
+    void agendarCita(AgendarCitaPacienteDTO agendarCitaPacienteDTO) throws Exception;
 
-    void crearPQRS();
+    DetallePQRSDTO crearPQRS(int codigo);
 
-    void listarPQRSPaciente();
+    List<ItemPQRSDTO> listarPQRSPaciente(int codigo) throws Exception;
 
-    void responderPQRS();
+    int responderPQRS(RegistroRespuestaDTO registroRespuestaDTO) throws Exception;
 
-    void listarCitasPaciente();
+    List<ItemCitaPendientePacienteDTO> listarCitasPaciente(int codigo) throws Exception;
 
-    void filtrarCitasPorFecha();
+    void filtrarCitasPorFecha() throws Exception;
 
-    void filtrarCitasPorMedico();
+    void filtrarCitasPorMedico() throws Exception;
 
-    void verDetalleCita();
+    List<ItemPacienteDTO> verDetalleCita() throws Exception;
 }

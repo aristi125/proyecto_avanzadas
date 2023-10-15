@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class Paciente extends Usuario implements Serializable {
     //LLAVE PRIMARIA
 
-    private LocalDateTime fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private LocalDateTime fechaCreacionCita;
     private String alergias;
 
