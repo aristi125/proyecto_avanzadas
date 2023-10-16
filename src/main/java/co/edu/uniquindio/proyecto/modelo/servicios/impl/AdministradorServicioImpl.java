@@ -34,9 +34,11 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     //=======================================================
     @Override
     public int crearMedico(RegistroMedicoDTO medicoDTO) throws Exception {
+
         if(estaRepetidoCorreo(medicoDTO.correo())){
             throw new Exception("El correo " + medicoDTO.correo()+" esta en uso");
         }
+
         if (estaRepetidoCedula(medicoDTO.cedula())){
             throw new Exception("La cedula "+ medicoDTO.cedula()+" ya se encuetnra registrada");
         }
@@ -44,6 +46,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         //SE CREA UNA INSTANCIA PARA GUARDARLO
         Medico medico = new Medico();
+
         //LE PASAMOS LOS PARAMETROS
         //medico.setFechaRegistro(LocalDateTime.now()); preguntar
         //medico.setEstado(Estado.ACTIVO);
@@ -53,6 +56,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         medico.setUrlFoto(medicoDTO.urlFoto());
         medico.setCiudad(medicoDTO.ciudad());
         medico.setEspecialidad(medicoDTO.especialidad());
+
         //SON METODOS DE LA CUENTA
         medico.setCorreo(medicoDTO.correo());
         medico.setPassword(medicoDTO.password());
@@ -60,6 +64,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         Medico medicoNuevo= medicoRepo.save(medico);
         asignarHorariosMedico(medicoNuevo,medicoDTO.horarios() );
+
         return medicoNuevo.getCodigo();
     }
 
@@ -69,6 +74,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
      * @param horarios
      */
     private void asignarHorariosMedico(Medico medicoNuevo, List<HorarioDTO> horarios) {
+
         for (HorarioDTO h : horarios){
             HorarioMedico hm = new HorarioMedico();
             hm.setDia(h.dia());
@@ -90,7 +96,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public int actualizarMedico(DetalleMedicoDTO medicoDTO) throws Exception {
+
         Optional<Medico> opcional = medicoRepo.findById(medicoDTO.codigo());
+
         if (opcional.isEmpty()){
             throw new Exception("No exisite un medico con el codigo "+ medicoDTO.codigo());
         }
@@ -102,6 +110,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         buscado.setTelefono(medicoDTO.telefono());
         buscado.setEspecialidad(medicoDTO.especialidad());
         buscado.setUrlFoto(medicoDTO.urlFoto());
+
         //preguntar
         buscado.setCiudad(medicoDTO.ciudad());
 
@@ -112,51 +121,63 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public void eliminarMedico(int codigo) throws Exception {
+
         Optional<Medico> opcional= medicoRepo.findById(codigo);
+
         if(opcional.isEmpty()){
             throw new Exception("no existe un medico con el codigo "+codigo);
         }
+
         Medico buscado = opcional.get();
         buscado.setEstadoUsuario(Estado.INACTIVO);
+
         //para guardar los datos
         medicoRepo.save(buscado);
     }
 
     @Override
     public List<ItemMedicoDTO> listarMedico() throws Exception {
+
         List<Medico> medicos = medicoRepo.findAll();
+
         if (medicos.isEmpty()){
             throw new Exception("No hay medicos registrados");
         }
+
         List<ItemMedicoDTO> respuesta = new ArrayList<>();
+
         for (Medico m: medicos){
             respuesta.add(new ItemMedicoDTO(
                     m.getCodigo(),
                     m.getCedula(),
                     m.getNombre(),
                     m.getUrlFoto(),
-                    m.getEspecialidad()
-            ));
+                    m.getEspecialidad()));
         }
+
         return respuesta;
     }
 
     @Override
     public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
+
         Optional<Medico> opcional = medicoRepo.findById(codigo);
+
         if (opcional.isEmpty()){
             throw new Exception("No existe un médico con el código "+ codigo);
         }
+
         Medico buscado = opcional.get();
         List<HorarioMedico> horarios = horarioRepo.findAllByCodigo(codigo);
         List<HorarioDTO> horariosDTO = new ArrayList<>();
+
         for(HorarioMedico h: horarios){
             horariosDTO.add( new HorarioDTO(
                     h.getDia(),
                     h.getHoraInicio(),
-                    h.getHoraFin()
-            ));
+                    h.getHoraFin()));
         }
+
         return new DetalleMedicoDTO(
                 buscado.getCodigo(),
                 buscado.getNombre(),
@@ -166,23 +187,24 @@ public class AdministradorServicioImpl implements AdministradorServicio {
                 buscado.getTelefono(),
                 buscado.getCorreo(),
                 buscado.getUrlFoto(),
-                horariosDTO
-        );
+                horariosDTO);
     }
 
     @Override
     public List<ItemPQRSDTO> listarPQRS() throws Exception {
+
         List<PQRS> listaPqrs = pqrsRepo.findAll();
         List<ItemPQRSDTO> respuesta = new ArrayList<>();
+
         for(PQRS p: listaPqrs){
             respuesta.add(new ItemPQRSDTO(
                     p.getCodigo(),
                     p.getEstado(),
                     p.getMotivo(),
                     p.getFechaCreacion(),
-                    p.getCita().getPaciente().getNombre()
-            ));
+                    p.getCita().getPaciente().getNombre()));
         }
+
         return respuesta;
     }
 
@@ -203,12 +225,11 @@ public class AdministradorServicioImpl implements AdministradorServicio {
                 buscando.getCita().getMedico().getNombre(),
                 buscando.getCita().getMedico().getEspecialidad(),
                 buscando.getFechaCreacion(),
-                convertirRespuestaDTO(mensajes)
-
-        );
+                convertirRespuestaDTO(mensajes));
     }
 
     private List<RespuestaDTO> convertirRespuestaDTO(List<Mensaje> mensajes) {
+
         return mensajes.stream().map(m -> new RespuestaDTO(
                 m.getCodigo(),
                 m.getContenido(),
@@ -219,15 +240,19 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public int responderPQRS(RegistroRespuestaDTO registroRespuestaDTO) throws Exception {
+
         Optional<PQRS> opcionalPQRS = pqrsRepo.findById(registroRespuestaDTO.codigoPQRS());
+
         if (opcionalPQRS.isEmpty()){
             throw new Exception("No existe una cuenta con el codigo "+registroRespuestaDTO.codigoPQRS());
         }
 
         Optional<Cuenta> opcionalCuenta = cuentaRepo.findById(registroRespuestaDTO.codigoCuenta());
+
         if (opcionalPQRS.isEmpty()){
             throw new Exception("No existe una cuenta con el codigo "+registroRespuestaDTO.codigoCuenta());
         }
+
         Mensaje mensajeNuevo = new Mensaje();
         mensajeNuevo.setCodigoPqrs(opcionalPQRS.get());
         mensajeNuevo.setFecha(LocalDateTime.now());
@@ -241,10 +266,13 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public void cambiarEstadoPQRS(int codigoPQRS, EstadoPQRS estadoPQRS) throws Exception {
+
         Optional<PQRS> opcional = pqrsRepo.findById(codigoPQRS);
+
         if (opcional.isEmpty()){
             throw  new Exception("No existe un PQRS con el codigo "+codigoPQRS);
         }
+
         PQRS pqrs = opcional.get();
         pqrs.setEstado(estadoPQRS);
 
@@ -253,8 +281,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     @Override
     public List<ItemCitaDTOAdmin> listarCitas() throws Exception {
+
         List<Cita> citas = citaRepo.findAll();
         List<ItemCitaDTOAdmin> respuesta = new ArrayList<>();
+
         if (citas.isEmpty()){
             throw new Exception("No existe citas creadas");
         }
@@ -267,9 +297,9 @@ public class AdministradorServicioImpl implements AdministradorServicio {
                     c.getMedico().getNombre(),
                     c.getMedico().getEspecialidad(),
                     c.getEstado(),
-                    c.getFechaCita()
-            ));
+                    c.getFechaCita()));
         }
+
         return respuesta;
     }
 }

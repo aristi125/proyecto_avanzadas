@@ -3,9 +3,7 @@ package co.edu.uniquindio.proyecto.modelo.entidades;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EPS;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.TipoSangre;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -26,9 +24,12 @@ public class Paciente extends Usuario implements Serializable {
     private String alergias;
 
     //LLAVES FORANEAS
+    @Enumerated(EnumType.STRING)
     private EPS eps;
+    @Enumerated(EnumType.STRING)
     private EstadoCita estadoCita;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoSangre tipoSangre;
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citaPacienteList;

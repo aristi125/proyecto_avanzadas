@@ -23,9 +23,12 @@ public class Usuario extends Cuenta implements Serializable {
     private String telefono;
     @Column(nullable = false)
     private String urlFoto;
+    @Enumerated(EnumType.STRING)
     private Estado estadoUsuario;
 
     //LLAVES FORANEAS
+    @Enumerated(EnumType.STRING)
     private Ciudad ciudad;
+    @Enumerated(EnumType.STRING)
     private Especialidad codigoEspecialidad;
 }

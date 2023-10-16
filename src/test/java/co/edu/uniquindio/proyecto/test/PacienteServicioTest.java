@@ -49,6 +49,7 @@ public class PacienteServicioTest {
         }
     }
 
+    @Test
     @Sql("classpath:dataset.sql")
     public void editarPerfilTest() throws Exception {
         DetatellePacienteDTO guardado = pacienteServicio.verDetallePaciente(1);
