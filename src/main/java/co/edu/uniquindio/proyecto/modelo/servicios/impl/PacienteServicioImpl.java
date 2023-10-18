@@ -11,6 +11,7 @@ import co.edu.uniquindio.proyecto.modelo.repositorios.*;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.PacienteServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -47,8 +48,12 @@ public class PacienteServicioImpl implements PacienteServicio {
         Paciente paciente = new Paciente();
 
         //DATOS DE LA CUENTA
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode( registroPacienteDTO.password() );
+        paciente.setPassword( passwordEncriptada );
+
         paciente.setCorreo(registroPacienteDTO.correo());
-        paciente.setPassword(registroPacienteDTO.password());
+        //paciente.setPassword(registroPacienteDTO.password());
 
         //DAROS DEL USUARIO
         paciente.setNombre(registroPacienteDTO.nombre());

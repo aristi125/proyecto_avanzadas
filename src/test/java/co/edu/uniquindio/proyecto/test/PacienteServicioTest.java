@@ -82,7 +82,49 @@ public class PacienteServicioTest {
         // borrado debemos obtener una excepcion indicando que ya no existe
         Assertions.assertThrows(Exception.class, ()-> pacienteServicio.verDetallePaciente(1));
     }
+    @Test
+    public void enviarLinkRecuperacion(){
 
+    }
+    @Test
+    public void cambiarPassword(){
+
+    }
+
+    @Test
+    public void agendarCita(){
+
+    }
+
+    @Test
+    public void crearPQRS(){
+
+    }
+
+    @Test
+    public void listarPQRSPaciente(){
+
+    }
+
+    @Test
+    public void responderPQRS(){
+
+    }
+
+    @Test
+    public void listarCitasPaciente(){
+
+    }
+
+    @Test
+    public void filtrarCitasPorFecha(){
+
+    }
+
+    @Test
+    public void filtrarCitasPorMedico(){
+
+    }
     @Test
     @Sql("classpath:dataset.sql")
     public void verHistorialCita() throws Exception {

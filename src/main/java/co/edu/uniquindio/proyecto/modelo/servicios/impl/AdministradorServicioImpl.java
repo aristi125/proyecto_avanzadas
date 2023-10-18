@@ -9,6 +9,7 @@ import co.edu.uniquindio.proyecto.modelo.repositorios.*;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.AdministradorServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -58,8 +59,12 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         medico.setEspecialidad(medicoDTO.especialidad());
 
         //SON METODOS DE LA CUENTA
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode( medicoDTO.password() );
+        medico.setPassword( passwordEncriptada );
+
         medico.setCorreo(medicoDTO.correo());
-        medico.setPassword(medicoDTO.password());
+        //medico.setPassword(medicoDTO.password());
         medico.setEstadoUsuario(Estado.ACTIVO);
 
         Medico medicoNuevo= medicoRepo.save(medico);

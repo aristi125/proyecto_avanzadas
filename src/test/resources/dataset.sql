@@ -17,23 +17,17 @@ insert into medico values('0147852369', 'CARTAGENA', 'ACTIVO', 'Maria', '3217122
 insert into medico values('0147852369', 'BOGOTA', 'ACTIVO', 'Daniela', '3217122375', 'no_tiene', 'CARDIOLGIA', 4);
 insert into medico values('0147852369', 'CALI', 'ACTIVO', 'Muricio', '3217122375', 'no_tiene', 'PEDIATRA', 5);
 
-insert into cita values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 1, 1);
-insert into cita values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 2, 2);
-insert into cita values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 3, 3);
-insert into cita values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 4, 4);
-insert into cita values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 5, 5);
+insert into cita (estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 1, 1);
+insert into cita (estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 2, 2);
+insert into cita (estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 3, 3);
+insert into cita (estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 4, 4);
+insert into cita (estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values('PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 5, 5);
 
-insert into atencion values(1,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 1);
-insert into atencion values(2,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 2);
-insert into atencion values(3,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 3);
-insert into atencion values(4,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 4);
-insert into atencion values(5,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 5);
-
-insert into dia_libre values('2023-12-12', 1);
-insert into dia_libre values('2023-12-13', 2);
-insert into dia_libre values('2023-12-14', 3);
-insert into dia_libre values('2023-12-15', 4);
-insert into dia_libre values('2023-12-16', 5);
+insert into dia_libre (dia, codigo_medico_codigo) values ('2023-12-12', 1);
+insert into dia_libre (dia, codigo_medico_codigo) values ('2023-12-13', 2);
+insert into dia_libre (dia, codigo_medico_codigo) values ('2023-12-14', 3);
+insert into dia_libre (dia, codigo_medico_codigo) values ('2023-12-15', 4);
+insert into dia_libre (dia, codigo_medico_codigo) values ('2023-12-16', 5);
 
 insert into horario_medico values(1, 'LUNES - VIERNES', '8:00:00', '17:00:00',1);
 insert into horario_medico values(2, 'MARTES - SABADO', '8:00:00', '17:00:00',2);
@@ -41,10 +35,15 @@ insert into horario_medico values(3, 'LUNES - VIERNES', '8:00:00', '17:00:00',3)
 insert into horario_medico values(4, 'MARTES - SABADO', '8:00:00', '17:00:00',4);
 insert into horario_medico values(5, 'LUNES - VIERNES', '8:00:00', '17:00:00',5);
 
-insert into pqrs values('APROBADO', '2023-10-18:13:32:00', 'El medio me atendio mal','me pico una avispa',1);
-insert into pqrs values('EN_PROCESO', '2023-10-18:13:32:00', 'El medio me atendio mal','me pico una avispa',2);
-insert into pqrs values('APROBADO', '2023-10-18:13:32:00', 'El medio me atendio mal','me pico una avispa',3);
-insert into pqrs values('APROBADO', '2023-10-18:13:32:00', 'El medio me atendio mal','me pico una avispa',4);
-insert into pqrs values('APROBADO', '2023-10-18:13:32:00', 'El medio me atendio mal','me pico una avispa',5);
+insert into atencion (diagnostico, notas_medicas, tratamiento) values('Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen');
+insert into atencion (diagnostico, notas_medicas, tratamiento) values('Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen');
+insert into atencion (diagnostico, notas_medicas, tratamiento) values('Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen');
+insert into atencion (diagnostico, notas_medicas, tratamiento) values('Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen');
+insert into atencion (diagnostico, notas_medicas, tratamiento)values('Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen');
 
+insert into pqrs (codigo, estado, fecha_creacion, motivo, tipo) values (1,'APROBADO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa');
+insert into pqrs (estado, fecha_creacion, motivo, tipo) values ('EN_PROCESO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa');
+insert into pqrs (estado, fecha_creacion, motivo, tipo) values ('APROBADO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa');
+insert into pqrs (estado, fecha_creacion, motivo, tipo) values ('APROBADO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa');
+insert into pqrs (estado, fecha_creacion, motivo, tipo) values ('APROBADO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa');
 

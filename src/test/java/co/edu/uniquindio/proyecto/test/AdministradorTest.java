@@ -1,8 +1,10 @@
 package co.edu.uniquindio.proyecto.test;
 
+import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
 import co.edu.uniquindio.proyecto.dto.admin.DetalleMedicoDTO;
 import co.edu.uniquindio.proyecto.dto.admin.HorarioDTO;
 import co.edu.uniquindio.proyecto.dto.admin.RegistroMedicoDTO;
+import co.edu.uniquindio.proyecto.modelo.entidades.*;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Ciudad;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Especialidad;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.AdministradorServicio;
@@ -45,6 +47,7 @@ public class AdministradorTest {
         }
     }
     @Test
+    @Sql("classpath:dataset.sql")
     public void actualizarMedicoTest(){
         DetalleMedicoDTO medicoDTO = new DetalleMedicoDTO(1,"Camilo", "1234567890", Ciudad.ARMENIA, Especialidad.NEUTROLOGIA,
                 "3116674102","camilo@gmail.com", "ssss",null );
@@ -70,5 +73,88 @@ public class AdministradorTest {
         }
 
         Assertions.assertEquals(1, codigoBuscado);
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void eliminarMedico(){
+        try {
+            administradorServicio.eliminarMedico(1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarMedico(){
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerMedico(){
+        try {
+            DetalleMedicoDTO admin = administradorServicio.obtenerMedico(1);
+            Medico medico = new Medico();
+            if (admin.equals(medico.getCodigo())){
+
+                medico.getCedula();
+                medico.getCiudad();
+                medico.getNombre();
+                medico.getTelefono();
+                medico.getUrlFoto();
+                medico.getEspecialidad();
+                medico.getCorreo();
+                medico.getHorarioMedicoList();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarPQRS(){
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void verDetallePQRS(){
+        try {
+            DetallePQRSDTO pqrsdto = administradorServicio.verDetallePQRS(1);
+            Paciente paciente = new Paciente();
+            PQRS pqrs = new PQRS();
+            Cita cita = new Cita();
+            if (pqrsdto.equals(cita.getCodigo())){
+                pqrs.getCodigo();
+                pqrs.getFechaCreacion();
+                pqrs.getMotivo();
+                pqrs.getTipo();
+                pqrs.getCita().getCodigo();
+                pqrs.getEstado();
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void responderPQRS(){
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void cambiarEstadoPQRS(){
+
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarCitas(){
+
     }
 }
