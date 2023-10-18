@@ -173,7 +173,7 @@ public class PacienteServicioImpl implements PacienteServicio {
                 c.setMedico(medico);
                 c.setMotivo(agendarCitaPacienteDTO.motivo());
                 c.setFechaCita(agendarCitaPacienteDTO.fechaCita());
-                c.setEstado(EstadoCita.PROGAMADA);
+                c.setEstado(EstadoCita.PROGRAMADA);
                 c.setFechaCreacion(LocalDateTime.now());
                 //PORQUE PASA ESO
                 //c.getMedico().getHorarioMedicoList(agendarCitaPacienteDTO.horarios());

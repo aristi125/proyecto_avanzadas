@@ -84,6 +84,7 @@ public class PacienteServicioTest {
     }
 
     @Test
+    @Sql("classpath:dataset.sql")
     public void verHistorialCita() throws Exception {
         //obtenemos la lista de todos los paciente
         List<ItemPacienteDTO> historialPaciete = pacienteServicio.verHistorialCita();

@@ -36,6 +36,7 @@ public class PQRS implements Serializable {
     @ToString.Exclude
     private Cita cita;
     @ToString.Exclude
+    @Enumerated(EnumType.STRING)
     private EstadoPQRS estado;
     @OneToMany(mappedBy = "codigoPqrs")
     @ToString.Exclude
