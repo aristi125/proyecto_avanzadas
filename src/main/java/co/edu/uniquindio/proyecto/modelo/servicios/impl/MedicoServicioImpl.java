@@ -100,6 +100,8 @@ public class MedicoServicioImpl implements MedicoServicio {
         List<Cita> citasProgramadas = citaRepo.obtenerCitasMedico(diaLibreDTO.codigo(), diaLibreDTO.diaLibre());
         Optional<Medico> optional = medicoRepo.findById(diaLibreDTO.codigo());
 
+        //SOlo puede haber un día libre activo
+
         if(citasProgramadas.size() > 0){
             throw new Exception("No se puede agendar este día porque ya tiene citas");
         }else{

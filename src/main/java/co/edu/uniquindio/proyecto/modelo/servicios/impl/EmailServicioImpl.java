@@ -15,14 +15,13 @@ public class EmailServicioImpl implements EmailServicio {
     private final JavaMailSender javaMailSender;
     @Override
     public void enviarEmail(EmailDTO emailDTO) throws Exception {
-        //PARA TENER ENCUENTA AL MOMENTO DE AHCER LOS TEST
-        //emailServicio.enviarEmail(new EmailDTO("Asunto", "Cuerpo mensaje", "Correo destino"));
+
         MimeMessage mensaje = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mensaje);
         helper.setSubject(emailDTO.asunto());
         helper.setText(emailDTO.cuerpo(), true);
         helper.setTo(emailDTO.destinatario());
-        helper.setFrom("no_reply@dominio.com");
+        helper.setFrom("proyectoavanzada436@gmail.com");
         javaMailSender.send(mensaje);
     }
 }

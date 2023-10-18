@@ -169,6 +169,10 @@ public class PacienteServicioImpl implements PacienteServicio {
             throw new Exception("No existe un medico con el codigo "+ agendarCitaPacienteDTO.cedulaMedico());
         }
 
+        //validar que la cita no se cruce con otra cita
+        //validar que la fecha de la cita sí esté dentro del horario del médico
+        //validar que el día elegido para la cita no sea un día libre del médico
+
         Cita c = new Cita();
         Paciente pacientes = new Paciente();
 

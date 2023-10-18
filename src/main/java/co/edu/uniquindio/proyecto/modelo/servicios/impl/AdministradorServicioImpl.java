@@ -222,13 +222,19 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         PQRS buscando = opcional.get();
         List<Mensaje> mensajes = mensajeRepo.findAllByCodigoPqrsCodigo(codigo);
 
+        if(buscando.getCita().getMedico() == null){
+            System.out.println("medico es nulo");
+        }
+
         return new DetallePQRSDTO(
                 buscando.getCodigo(),
                 buscando.getEstado(),
                 buscando.getMotivo(),
                 buscando.getCita().getPaciente().getNombre(),
-                buscando.getCita().getMedico().getNombre(),
-                buscando.getCita().getMedico().getEspecialidad(),
+                //buscando.getCita().getMedico().getNombre(),
+                //buscando.getCita().getMedico().getEspecialidad(),
+                null,
+                null,
                 buscando.getFechaCreacion(),
                 convertirRespuestaDTO(mensajes));
     }

@@ -33,7 +33,6 @@ public class PQRS implements Serializable {
 
     //LLAVES FORANEAS
     @ManyToOne
-    @ToString.Exclude
     private Cita cita;
     @ToString.Exclude
     @Enumerated(EnumType.STRING)

@@ -7,6 +7,8 @@ import co.edu.uniquindio.proyecto.dto.admin.RegistroMedicoDTO;
 import co.edu.uniquindio.proyecto.modelo.entidades.*;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Ciudad;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Especialidad;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoPQRS;
+import co.edu.uniquindio.proyecto.modelo.servicios.impl.AdministradorServicioImpl;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.AdministradorServicio;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +25,7 @@ import java.util.List;
 @Transactional
 public class AdministradorTest {
     @Autowired
-    private AdministradorServicio administradorServicio;
+    private AdministradorServicioImpl administradorServicio;
     @Test
     public void crearMedicoTest(){
         List<HorarioDTO> horarios = new ArrayList<>();
@@ -49,7 +51,7 @@ public class AdministradorTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarMedicoTest(){
-        DetalleMedicoDTO medicoDTO = new DetalleMedicoDTO(1,"Camilo", "1234567890", Ciudad.ARMENIA, Especialidad.NEUTROLOGIA,
+        DetalleMedicoDTO medicoDTO = new DetalleMedicoDTO(6,"Camilo", "1234567890", Ciudad.ARMENIA, Especialidad.NEUTROLOGIA,
                 "3116674102","camilo@gmail.com", "ssss",null );
         List<HorarioDTO> horarios = new ArrayList<>();
         RegistroMedicoDTO registroDTO = new RegistroMedicoDTO("Pepito",
@@ -72,14 +74,14 @@ public class AdministradorTest {
             throw new RuntimeException("Medico no existe, no se puede actualizar");
         }
 
-        Assertions.assertEquals(1, codigoBuscado);
+        Assertions.assertEquals(6, codigoBuscado);
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarMedico(){
         try {
-            administradorServicio.eliminarMedico(1);
+            administradorServicio.eliminarMedico(6);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -95,19 +97,9 @@ public class AdministradorTest {
     @Sql("classpath:dataset.sql")
     public void obtenerMedico(){
         try {
-            DetalleMedicoDTO admin = administradorServicio.obtenerMedico(1);
-            Medico medico = new Medico();
-            if (admin.equals(medico.getCodigo())){
+            DetalleMedicoDTO admin = administradorServicio.obtenerMedico(6);
 
-                medico.getCedula();
-                medico.getCiudad();
-                medico.getNombre();
-                medico.getTelefono();
-                medico.getUrlFoto();
-                medico.getEspecialidad();
-                medico.getCorreo();
-                medico.getHorarioMedicoList();
-            }
+            Assertions.assertEquals("Andres", admin.nombre());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -124,18 +116,9 @@ public class AdministradorTest {
     public void verDetallePQRS(){
         try {
             DetallePQRSDTO pqrsdto = administradorServicio.verDetallePQRS(1);
-            Paciente paciente = new Paciente();
-            PQRS pqrs = new PQRS();
-            Cita cita = new Cita();
-            if (pqrsdto.equals(cita.getCodigo())){
-                pqrs.getCodigo();
-                pqrs.getFechaCreacion();
-                pqrs.getMotivo();
-                pqrs.getTipo();
-                pqrs.getCita().getCodigo();
-                pqrs.getEstado();
 
-            }
+            Assertions.assertEquals(EstadoPQRS.APROBADO, pqrsdto.estado());
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

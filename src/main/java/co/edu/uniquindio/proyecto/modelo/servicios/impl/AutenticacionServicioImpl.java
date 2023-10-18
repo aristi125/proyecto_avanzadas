@@ -32,10 +32,6 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
         return new TokenDTO( crearToken(cuenta) );
     }
 
-    private boolean estaRepetidoCorreo(String correo) {
-        return !(cuentaRepo.findByCorreo(correo) != null);
-    }
-
     private String crearToken(Cuenta cuenta){
         String rol;
         String nombre;
