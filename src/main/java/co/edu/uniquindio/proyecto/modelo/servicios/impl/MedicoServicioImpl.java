@@ -81,21 +81,17 @@ public class MedicoServicioImpl implements MedicoServicio {
         }
         Paciente paciente = opcional.get();
         List<HistorialPacienteDTO> respuesta = new ArrayList<>();
-        if (paciente.equals(citasHistorial) && (paciente.getEstadoCita().equals(EstadoCita.COMPLETA))) {
             for (Cita c : citasHistorial) {
                 respuesta.add(new HistorialPacienteDTO(
-                   c.getCodigo(),
-                   c.getPaciente().getNombre(),
-                   c.getPaciente().getCedula(),
-                   c.getAtencion().getTratamiento(),
-                   c.getAtencion().getDiagnostico(),
-                   c.getAtencion().getNotasMedicas(),
-                   c.getMotivo()
+                        c.getCodigo(),
+                        c.getPaciente().getNombre(),
+                        c.getPaciente().getCedula(),
+                        c.getAtencion().getTratamiento(),
+                        c.getAtencion().getDiagnostico(),
+                        c.getAtencion().getNotasMedicas(),
+                        c.getMotivo()
                 ));
             }
-        }else {
-            throw new Exception("El pacietne no tiene historial creado");
-        }
         return respuesta;
     }
 
@@ -138,18 +134,16 @@ public class MedicoServicioImpl implements MedicoServicio {
         Paciente paciente = opcional.get();
         List<HistorialPacienteDTO> respuesta = new ArrayList<>();
 
-        if(paciente.getEstadoCita().equals(EstadoCita.COMPLETA)) {
-            for (Cita c : citasHistorial) {
-                respuesta.add(new HistorialPacienteDTO(
-                        c.getCodigo(),
-                        c.getPaciente().getNombre(),
-                        c.getPaciente().getCedula(),
-                        c.getAtencion().getTratamiento(),
-                        c.getAtencion().getDiagnostico(),
-                        c.getAtencion().getNotasMedicas(),
-                        c.getMotivo()
-                ));
-            }
+        for (Cita c : citasHistorial) {
+            respuesta.add(new HistorialPacienteDTO(
+                    c.getCodigo(),
+                    c.getPaciente().getNombre(),
+                    c.getPaciente().getCedula(),
+                    c.getAtencion().getTratamiento(),
+                    c.getAtencion().getDiagnostico(),
+                    c.getAtencion().getNotasMedicas(),
+                    c.getMotivo()
+            ));
         }
 
         return respuesta;

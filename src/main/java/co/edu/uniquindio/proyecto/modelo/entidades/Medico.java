@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Medico extends Usuario implements Serializable {
 
-    //LLAVES FORANEAS
+    @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
 
     @OneToMany(mappedBy = "medico")

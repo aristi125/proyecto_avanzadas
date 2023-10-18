@@ -20,30 +20,15 @@ public class Paciente extends Usuario implements Serializable {
     //LLAVE PRIMARIA
 
     private LocalDate fechaNacimiento;
-    private LocalDateTime fechaCreacionCita;
     private String alergias;
 
     //LLAVES FORANEAS
     @Enumerated(EnumType.STRING)
     private EPS eps;
-    @Enumerated(EnumType.STRING)
-    private EstadoCita estadoCita;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoSangre tipoSangre;
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citaPacienteList;
 
-    @Override
-    public String toString() {
-        return "Paciente{" +
-                "fechaNacimiento=" + fechaNacimiento +
-                ", fechaCreacionCita=" + fechaCreacionCita +
-                ", alergias='" + alergias + '\'' +
-                ", eps=" + eps +
-                ", estadoCita=" + estadoCita +
-                ", tipoSangre=" + tipoSangre +
-                ", citaPacienteList=" + citaPacienteList +
-                '}';
-    }
 }

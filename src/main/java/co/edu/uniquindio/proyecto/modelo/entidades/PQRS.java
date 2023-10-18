@@ -15,22 +15,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class PQRS implements Serializable {
     //LLAVE PRIMARIA
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Include
     private int codigo;
     @Column(nullable = false)
+    @ToString.Include
     private LocalDateTime fechaCreacion;
     @Column(nullable = false, length = 50)
     private String tipo;
+    @ToString.Include
     @Column(nullable = false, length = 300)
     private String motivo;
 
     //LLAVES FORANEAS
     @ManyToOne
+    @ToString.Exclude
     private Cita cita;
+    @ToString.Exclude
     private EstadoPQRS estado;
     @OneToMany(mappedBy = "codigoPqrs")
+    @ToString.Exclude
     private List<Mensaje> mensajeList;
 }

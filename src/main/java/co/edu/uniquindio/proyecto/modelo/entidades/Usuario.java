@@ -8,11 +8,11 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Usuario extends Cuenta implements Serializable {
     @Column(nullable = false, length = 10)
@@ -29,6 +29,4 @@ public class Usuario extends Cuenta implements Serializable {
     //LLAVES FORANEAS
     @Enumerated(EnumType.STRING)
     private Ciudad ciudad;
-    @Enumerated(EnumType.STRING)
-    private Especialidad codigoEspecialidad;
 }

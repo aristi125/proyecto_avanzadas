@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
 import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
 import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
 import co.edu.uniquindio.proyecto.dto.paciente.*;
+import co.edu.uniquindio.proyecto.modelo.entidades.PQRS;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface PacienteServicio {
 
     int agendarCita(AgendarCitaPacienteDTO agendarCitaPacienteDTO) throws Exception;
 
-    DetallePQRSDTO crearPQRS(int codigo);
+    PQRS crearPQRS(int codigo, String tipo, String motivo) throws Exception;
 
     List<ItemPQRSDTO> listarPQRSPaciente() throws Exception;
 
@@ -30,7 +31,7 @@ public interface PacienteServicio {
 
     List<ItemCitaPendientePacienteDTO> filtrarCitasPorFecha(ItemCitaPendientePacienteDTO fechaPacienteDTO) throws Exception;
 
-    void filtrarCitasPorMedico() throws Exception;
+    List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(ItemCitaPendientePacienteDTO pendientePacienteDTO) throws Exception;
     DetatellePacienteDTO verDetallePaciente(int codigo) throws Exception;
 
     List<ItemPacienteDTO> verHistorialCita() throws Exception;
