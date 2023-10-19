@@ -43,14 +43,10 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         if (estaRepetidoCedula(medicoDTO.cedula())){
             throw new Exception("La cedula "+ medicoDTO.cedula()+" ya se encuetnra registrada");
         }
-        //=====================================================
 
         //SE CREA UNA INSTANCIA PARA GUARDARLO
         Medico medico = new Medico();
 
-        //LE PASAMOS LOS PARAMETROS
-        //medico.setFechaRegistro(LocalDateTime.now()); preguntar
-        //medico.setEstado(Estado.ACTIVO);
         medico.setNombre(medicoDTO.nombre());
         medico.setCedula(medicoDTO.cedula());
         medico.setTelefono(medicoDTO.telefono());
@@ -64,6 +60,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         medico.setPassword( passwordEncriptada );
 
         medico.setCorreo(medicoDTO.correo());
+
         //medico.setPassword(medicoDTO.password());
         medico.setEstadoUsuario(Estado.ACTIVO);
 
@@ -88,6 +85,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
             //GUARDAMOS LOS HORARIOS ASIGNADOS AL MEDICO
             horarioRepo.save(hm);
+
         }
     }
 
@@ -122,6 +120,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         //guarda el buscado y actualiza los datos
         medicoRepo.save(buscado);
         return buscado.getCodigo();
+
     }
 
     @Override
@@ -138,6 +137,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         //para guardar los datos
         medicoRepo.save(buscado);
+
     }
 
     @Override
@@ -177,10 +177,12 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         List<HorarioDTO> horariosDTO = new ArrayList<>();
 
         for(HorarioMedico h: horarios){
+
             horariosDTO.add( new HorarioDTO(
                     h.getDia(),
                     h.getHoraInicio(),
                     h.getHoraFin()));
+
         }
 
         return new DetalleMedicoDTO(
@@ -202,6 +204,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         List<ItemPQRSDTO> respuesta = new ArrayList<>();
 
         for(PQRS p: listaPqrs){
+
             respuesta.add(new ItemPQRSDTO(
                     p.getCodigo(),
                     p.getEstado(),
@@ -211,19 +214,22 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         }
 
         return respuesta;
+
     }
 
     @Override
     public DetallePQRSDTO verDetallePQRS(int codigo) throws Exception {
         Optional<PQRS> opcional = pqrsRepo.findById(codigo);
+
         if (opcional.isEmpty()){
             throw new Exception("No existe un PQRS con el codigo "+ codigo);
         }
+
         PQRS buscando = opcional.get();
         List<Mensaje> mensajes = mensajeRepo.findAllByCodigoPqrsCodigo(codigo);
 
         if(buscando.getCita().getMedico() == null){
-            System.out.println("medico es nulo");
+            throw new Exception("El medico es nulo");
         }
 
         return new DetallePQRSDTO(
@@ -231,10 +237,8 @@ public class AdministradorServicioImpl implements AdministradorServicio {
                 buscando.getEstado(),
                 buscando.getMotivo(),
                 buscando.getCita().getPaciente().getNombre(),
-                //buscando.getCita().getMedico().getNombre(),
-                //buscando.getCita().getMedico().getEspecialidad(),
-                null,
-                null,
+                buscando.getCita().getMedico().getNombre(),
+                buscando.getCita().getMedico().getEspecialidad(),
                 buscando.getFechaCreacion(),
                 convertirRespuestaDTO(mensajes));
     }
@@ -312,5 +316,6 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         }
 
         return respuesta;
+
     }
 }

@@ -1,9 +1,9 @@
 package co.edu.uniquindio.proyecto.test;
 
 import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
-import co.edu.uniquindio.proyecto.dto.admin.DetalleMedicoDTO;
-import co.edu.uniquindio.proyecto.dto.admin.HorarioDTO;
-import co.edu.uniquindio.proyecto.dto.admin.RegistroMedicoDTO;
+import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
+import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
+import co.edu.uniquindio.proyecto.dto.admin.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.*;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Ciudad;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Especialidad;
@@ -90,7 +90,12 @@ public class AdministradorTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarMedico(){
-
+        try{
+            List<ItemMedicoDTO> medicos = administradorServicio.listarMedico();
+            Assertions.assertNotNull(medicos);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -108,7 +113,12 @@ public class AdministradorTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarPQRS(){
-
+        try{
+            List<ItemPQRSDTO> pqrs = administradorServicio.listarPQRS();
+            Assertions.assertNotNull(pqrs);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -116,9 +126,7 @@ public class AdministradorTest {
     public void verDetallePQRS(){
         try {
             DetallePQRSDTO pqrsdto = administradorServicio.verDetallePQRS(1);
-
             Assertions.assertEquals(EstadoPQRS.APROBADO, pqrsdto.estado());
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -126,18 +134,35 @@ public class AdministradorTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void responderPQRS(){
-
+        try{
+            administradorServicio.responderPQRS(new RegistroRespuestaDTO(1, 1, 2, "pqrs resuelta"));
+            DetallePQRSDTO pqrs =  administradorServicio.verDetallePQRS(1);
+            Assertions.assertEquals("pqrs resuelta", pqrs.mensaje().get(0).mensaje());
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void cambiarEstadoPQRS(){
-
+        try{
+            administradorServicio.cambiarEstadoPQRS(1, EstadoPQRS.FINALIZADO);
+            DetallePQRSDTO pqrs =  administradorServicio.verDetallePQRS(1);
+            Assertions.assertEquals(EstadoPQRS.FINALIZADO, pqrs.estado());
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCitas(){
-
+        try{
+            List<ItemCitaDTOAdmin> citas = administradorServicio.listarCitas();
+            Assertions.assertNotNull(citas);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 }

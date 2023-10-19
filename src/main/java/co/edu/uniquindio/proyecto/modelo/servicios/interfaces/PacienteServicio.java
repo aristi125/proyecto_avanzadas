@@ -24,7 +24,7 @@ public interface PacienteServicio {
     PQRS crearPQRS(int codigo, String tipo, String motivo) throws Exception;
 
     List<ItemPQRSDTO> listarPQRSPaciente() throws Exception;
-
+    DetallePQRSDTO verDetallePQRS(int codigo) throws Exception;
     int responderPQRS(RegistroRespuestaDTO registroRespuestaDTO) throws Exception;
 
     List<ItemCitaPendientePacienteDTO> listarCitasPaciente(int codigo) throws Exception;
