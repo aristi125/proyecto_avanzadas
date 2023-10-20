@@ -37,7 +37,7 @@ public class AdministradorTest {
                 Especialidad.CARDIOLGIA,
                 "78387",
                 "pepito@gmail.com",
-                "123a",
+                "123",
                 "url_foto",
                 horarios
         );

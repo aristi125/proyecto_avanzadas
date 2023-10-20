@@ -23,7 +23,7 @@ public class MedicoServicioTest {
     @Sql("classpath:dataset.sql")
     public void ListarCitasPendientesTest(){
         try{
-            List<ItemCitasPendienteDTOMedico> citas = medicoServicio.listarCitasPendientes(1);
+            List<ItemCitasPendienteDTOMedico> citas = medicoServicio.listarCitasPendientes(6);
             Assertions.assertNotNull(citas);
         }catch (Exception e){
             throw new RuntimeException(e);

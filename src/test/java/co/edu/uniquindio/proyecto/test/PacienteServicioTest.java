@@ -4,13 +4,16 @@ import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
 import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
 import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
 import co.edu.uniquindio.proyecto.dto.admin.ItemCitaDTOAdmin;
-import co.edu.uniquindio.proyecto.dto.paciente.DetatellePacienteDTO;
-import co.edu.uniquindio.proyecto.dto.paciente.ItemCitaPendientePacienteDTO;
-import co.edu.uniquindio.proyecto.dto.paciente.ItemPacienteDTO;
-import co.edu.uniquindio.proyecto.dto.paciente.RegistroPacienteDTO;
+import co.edu.uniquindio.proyecto.dto.paciente.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.Cita;
 import co.edu.uniquindio.proyecto.modelo.entidades.Medico;
+import co.edu.uniquindio.proyecto.modelo.entidades.PQRS;
+import co.edu.uniquindio.proyecto.modelo.entidades.Paciente;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.*;
+import co.edu.uniquindio.proyecto.modelo.repositorios.CitaRepo;
+import co.edu.uniquindio.proyecto.modelo.repositorios.PacienteRepo;
+import co.edu.uniquindio.proyecto.modelo.servicios.impl.AdministradorServicioImpl;
+import co.edu.uniquindio.proyecto.modelo.servicios.impl.PacienteServicioImpl;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.PacienteServicio;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -20,16 +23,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
 public class PacienteServicioTest {
     @Autowired
-    private PacienteServicio pacienteServicio;
-
+    private PacienteServicioImpl pacienteServicio;
+    @Autowired
+    private PacienteRepo pacienteRepo;
+    @Autowired
+    private CitaRepo citaRepo;
     @Test
-    @Sql("classpath:dataset.sql")
     public void registrarseTest(){
         RegistroPacienteDTO pacienteDTOS = new RegistroPacienteDTO(
                 "michael@gmail.com",
@@ -95,19 +102,52 @@ public class PacienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void cambiarPassword(){
-
+        try{
+            pacienteServicio.cambiarPassword(new CambiarPasswordDTO(1, "123456", "michael@gmail.com"));
+            Optional<Paciente> paciente = pacienteRepo.findById(1);
+            Assertions.assertEquals(paciente.get().getPassword(), "123456");
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void agendarCita(){
+        try {
+            LocalDateTime fecha = LocalDateTime.now();
 
+            System.out.println(fecha);
+            AgendarCitaPacienteDTO agenda = new AgendarCitaPacienteDTO(
+                    "Andres",
+                    "pepito",
+                    "0147852369",
+                    "1234567890",
+                    "me corte la cabeza",
+                    fecha,
+                    Especialidad.CARDIOLGIA,
+                    "no trabajo mi pes"
+                    );
+            int codigo = pacienteServicio.agendarCita(agenda);
+            Optional<Cita> cita = citaRepo.findById(codigo);
+            Assertions.assertNotNull(cita.get());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void crearPQRS(){
 
+        try {
+            PQRS pqrs =  pacienteServicio.crearPQRS(10,
+                    "me duele el cuerpo",
+                    "mi novia es muy toxica");
+            Assertions.assertNotNull(pqrs);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -180,16 +220,8 @@ public class PacienteServicioTest {
     public void filtrarCitasPorMedico(){
 
         try {
-            Medico medico = new Medico();
-            Cita cita = new Cita();
             List<ItemCitaPendientePacienteDTO> pendientes = null;
-            pendientes =  pacienteServicio.filtrarCitasPorMedico(new ItemCitaPendientePacienteDTO(
-                    cita.getCodigo(),
-                    medico.getCedula(),
-                    medico.getNombre(),
-                    cita.getFechaCita(),
-                    Especialidad.CARDIOLGIA,
-                    EstadoCita.PROGRAMADA));
+            pendientes =  pacienteServicio.filtrarCitasPorMedico(1, "Andres");
             Assertions.assertNotNull(pendientes);
         }catch (Exception e){
             throw new RuntimeException(e);

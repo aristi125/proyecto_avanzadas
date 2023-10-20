@@ -19,11 +19,8 @@ public class Cita implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
-    @Column(nullable = false)
     private LocalDateTime fechaCreacion;
-    @Column(nullable = false)
     private LocalDateTime fechaCita;
-    @Column(nullable = false, length = 200)
     private String motivo;
 
     //LLAVES FORANEAS

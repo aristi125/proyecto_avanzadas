@@ -17,10 +17,10 @@ insert into paciente values ('9632587410', 'MEDELLIN', 'INACTIVO', 'ash', '32171
 insert into paciente values ('9632587410', 'CARTAGENA', 'INACTIVO', 'ash', '3217122375', 'no_tieneFoto', 'no tiene alergias', 'SANITAS_EPS','2002-05-12', 'AB_NEGATIVO',5);
 
 insert into medico values('0147852369', 'ARMENIA', 'ACTIVO', 'Andres', '3217122375', 'no_tiene', 'CARDIOLGIA', 6);
-insert into medico values('0147852369', 'MEDELLIN', 'ACTIVO', 'Raul', '3217122375', 'no_tiene', 'NEUTROLOGIA', 7);
-insert into medico values('0147852369', 'CARTAGENA', 'ACTIVO', 'Maria', '3217122375', 'no_tiene', 'CIRUJANO_PLASTICO', 8);
-insert into medico values('0147852369', 'BOGOTA', 'ACTIVO', 'Daniela', '3217122375', 'no_tiene', 'CARDIOLGIA', 9);
-insert into medico values('0147852369', 'CALI', 'ACTIVO', 'Muricio', '3217122375', 'no_tiene', 'PEDIATRA', 10);
+insert into medico values('014785236', 'MEDELLIN', 'ACTIVO', 'Raul', '3217122375', 'no_tiene', 'NEUTROLOGIA', 7);
+insert into medico values('01478523', 'CARTAGENA', 'ACTIVO', 'Maria', '3217122375', 'no_tiene', 'CIRUJANO_PLASTICO', 8);
+insert into medico values('0147852', 'BOGOTA', 'ACTIVO', 'Daniela', '3217122375', 'no_tiene', 'CARDIOLGIA', 9);
+insert into medico values('014785', 'CALI', 'ACTIVO', 'Muricio', '3217122375', 'no_tiene', 'PEDIATRA', 10);
 
 insert into cita values (1, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 1);
 insert into cita values (2, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 2);
@@ -40,7 +40,7 @@ insert into horario_medico values(3, 'LUNES - VIERNES', '8:00:00', '17:00:00',8)
 insert into horario_medico values(4, 'MARTES - SABADO', '8:00:00', '17:00:00',9);
 insert into horario_medico values(5, 'LUNES - VIERNES', '8:00:00', '17:00:00',10);
 
-insert into atencion values(1,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 1);
+insert into atencion values(1,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debe tomar acetaminofen', 1);
 insert into atencion values(2,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 2);
 insert into atencion values(3,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 3);
 insert into atencion values(4,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 4);

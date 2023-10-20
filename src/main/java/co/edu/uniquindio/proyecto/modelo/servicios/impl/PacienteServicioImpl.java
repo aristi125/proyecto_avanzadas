@@ -183,9 +183,6 @@ public class PacienteServicioImpl implements PacienteServicio {
                 c.setFechaCita(agendarCitaPacienteDTO.fechaCita());
                 c.setEstado(EstadoCita.PROGRAMADA);
                 c.setFechaCreacion(LocalDateTime.now());
-
-                //validar que la cita no se cruce con otra cita
-                //validar que el día elegido para la cita no sea un día libre del médico
                 if (verificarCruceOtraCita(agendarCitaPacienteDTO) == false &&
                         verificarDiaLibremedico(agendarCitaPacienteDTO) == false) {
 
@@ -265,7 +262,7 @@ public class PacienteServicioImpl implements PacienteServicio {
         //codigo es el codigo del paciente
         int codigoPaciente = codigo;
         String tipoPqrs = tipo, motivoPqrs = motivo;
-        PQRS pqrs = null;
+        PQRS pqrs = new PQRS();
 
         List<PQRS> pqrsPaciente = pqrsRepo.listarPqrsDePaciente(codigoPaciente);
 
@@ -415,26 +412,24 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(ItemCitaPendientePacienteDTO pendientePacienteDTO) throws Exception {
-        Paciente opcional = pacienteRepo.findByCitaPacienteListMedicoNombre(pendientePacienteDTO.nombreMedico());
-        List<Cita> citas = citaRepo.findAll();
+    public List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(int codigopaciente, String nombreMedico) throws Exception {
+        List<Cita> citas = pacienteRepo.listarCitasPacienteMedico(codigopaciente, nombreMedico);
         List<ItemCitaPendientePacienteDTO> respuesta = new ArrayList<>();
 
         if (citas.isEmpty()){
             throw new Exception("No existe cita creadas");
         }
     //organizar
-        if (pendientePacienteDTO.nombreMedico().equals(opcional.getNombre())) {
-            for (Cita c: citas){
-                respuesta.add(new ItemCitaPendientePacienteDTO(
-                        c.getCodigo(),
-                        c.getMedico().getCedula(),
-                        c.getMedico().getNombre(),
-                        c.getFechaCita(),
-                        c.getMedico().getEspecialidad(),
-                        c.getEstado()));
-            }
+        for (Cita c: citas){
+            respuesta.add(new ItemCitaPendientePacienteDTO(
+                    c.getCodigo(),
+                    c.getMedico().getCedula(),
+                    c.getMedico().getNombre(),
+                    c.getFechaCita(),
+                    c.getMedico().getEspecialidad(),
+                    c.getEstado()));
         }
+
         return respuesta;
     }
 

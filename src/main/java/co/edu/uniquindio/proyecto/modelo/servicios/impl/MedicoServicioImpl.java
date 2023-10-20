@@ -32,11 +32,7 @@ public class MedicoServicioImpl implements MedicoServicio {
     @Override
     public List<ItemCitasPendienteDTOMedico> listarCitasPendientes(int codigo) throws Exception {
 
-        List<Cita> citas = citaRepo.obtenerCitasMedico(codigo, EstadoCita.COMPLETA);
-
-        if (citas.isEmpty()){
-            throw new Exception("No hay citas registradas");
-        }
+        List<Cita> citas = citaRepo.obtenerCitasMedico(codigo, EstadoCita.PROGRAMADA);
 
         List<ItemCitasPendienteDTOMedico> respuesta = new ArrayList<>();
 
@@ -139,10 +135,6 @@ public class MedicoServicioImpl implements MedicoServicio {
         //List<Cita> citasHistorial = citaRepo.obtenerHistorialPaciente(codigo, EstadoCita.COMPLETA);
         Optional<Paciente> opcional = pacienteRepo.findById(codigo);
         List<Cita> citasHistorial= citaRepo.obtenerHistorialPaciente(codigo);
-
-        if (!opcional.isEmpty()){
-            throw new Exception("El paciente con el codigo "+codigo+" no a registrado citas");
-        }
 
         if (citasHistorial.isEmpty()){
             throw new Exception("El paciente con el codigo "+codigo+" no a registrado citas");

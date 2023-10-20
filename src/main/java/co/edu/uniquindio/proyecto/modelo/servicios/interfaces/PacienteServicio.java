@@ -31,7 +31,7 @@ public interface PacienteServicio {
 
     List<ItemCitaPendientePacienteDTO> filtrarCitasPorFecha(ItemCitaPendientePacienteDTO fechaPacienteDTO) throws Exception;
 
-    List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(ItemCitaPendientePacienteDTO pendientePacienteDTO) throws Exception;
+    List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(int codigopaciente, String nombreMedico) throws Exception;
     DetatellePacienteDTO verDetallePaciente(int codigo) throws Exception;
 
     List<ItemPacienteDTO> verHistorialCita() throws Exception;
