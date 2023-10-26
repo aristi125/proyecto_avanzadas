@@ -2,7 +2,7 @@ package co.edu.uniquindio.proyecto.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-
+@requestbody
 public record RegistroRespuestaDTO(
         @Positive
         int codigoCuenta,
