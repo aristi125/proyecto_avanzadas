@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyecto.modelo.enumeracion.EPS;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.TipoSangre;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -18,8 +19,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Paciente extends Usuario implements Serializable {
     //LLAVE PRIMARIA
-
+    @NotNull
     private LocalDate fechaNacimiento;
+    @NotNull
     private String alergias;
 
     //LLAVES FORANEAS

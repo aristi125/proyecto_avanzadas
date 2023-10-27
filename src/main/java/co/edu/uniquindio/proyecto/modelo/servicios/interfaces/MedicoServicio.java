@@ -11,7 +11,7 @@ public interface MedicoServicio {
     int atenderCitas(AtenderConsultaPacienteDTO atenderConsultaPacienteDTO) throws Exception;
 
     List<HistorialPacienteDTO> listasUnaCitasPaciente(int codigo) throws Exception; //historial medico
-    void agendarDiaLibre(DiaLibreDTO diaLibreDTO) throws Exception;
+    int agendarDiaLibre(DiaLibreDTO diaLibreDTO) throws Exception;
     //TENGO DUDAS SI ESTA BIEN
     List<HistorialPacienteDTO> listarTodasCitasPacientes(int codigo) throws Exception;
 

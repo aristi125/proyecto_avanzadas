@@ -84,31 +84,31 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public int editarPerfil(DetatellePacienteDTO detatellePacienteDTO) throws Exception {
+    public int editarPerfil(DetallePacienteDTO detallePacienteDTO) throws Exception {
 
-        Optional<Paciente> opcional = pacienteRepo.findById(detatellePacienteDTO.codigo());
+        Optional<Paciente> opcional = pacienteRepo.findById(detallePacienteDTO.codigo());
         if (opcional.isEmpty()){
-            throw new Exception("El paciente con el codigo "+ detatellePacienteDTO.codigo() +" No existe");
+            throw new Exception("El paciente con el codigo "+ detallePacienteDTO.codigo() +" No existe");
         }
 
         //BUSCAMOS AL PACIENTE CON EL GET()
         Paciente buscado = opcional.get();
 
-        if (detatellePacienteDTO.codigo() == buscado.getCodigo()){
+        if (detallePacienteDTO.codigo() == buscado.getCodigo()){
             //DATOS DE LA CUENTA
-            buscado.setCorreo(detatellePacienteDTO.correo());
+            buscado.setCorreo(detallePacienteDTO.correo());
 
             //DATOS DEL USUARIO
-            buscado.setNombre(detatellePacienteDTO.nombre());
-            buscado.setCedula(detatellePacienteDTO.cedula());
-            buscado.setTelefono(detatellePacienteDTO.telefono());
-            buscado.setUrlFoto(detatellePacienteDTO.urlfoto());
-            buscado.setCiudad(detatellePacienteDTO.ciudad());
+            buscado.setNombre(detallePacienteDTO.nombre());
+            buscado.setCedula(detallePacienteDTO.cedula());
+            buscado.setTelefono(detallePacienteDTO.telefono());
+            buscado.setUrlFoto(detallePacienteDTO.urlfoto());
+            buscado.setCiudad(detallePacienteDTO.ciudad());
 
             //DATOS DEL PACIENTE
-            buscado.setAlergias(detatellePacienteDTO.alergias());
-            buscado.setEps(detatellePacienteDTO.eps());
-            buscado.setTipoSangre(detatellePacienteDTO.tipoSangre());
+            buscado.setAlergias(detallePacienteDTO.alergias());
+            buscado.setEps(detallePacienteDTO.eps());
+            buscado.setTipoSangre(detallePacienteDTO.tipoSangre());
         }
 
         //como el objeto paciente ya tiene un id, el metodo save() no crea un nuevo registro
@@ -205,23 +205,15 @@ public class PacienteServicioImpl implements PacienteServicio {
         List<Medico> medicoList = new ArrayList<>();
         //primera forma que se me ocurrio
         LocalDateTime fechaLibre = null;
+        boolean verificar = false;
 
         for (Medico m: medicoList){
             fechaLibre = LocalDateTime.from(m.getDia_libreList().get(0).getDia());
+            if (agendarCitaPacienteDTO.fechaCita().isEqual(fechaLibre)) {
+                verificar = true;
+            }
         }
-
-        if (agendarCitaPacienteDTO.fechaCita().isEqual(fechaLibre)){
-            return true;
-        }else {
-            return false;
-        }
-        //segunda forma
-//        Medico medico = new Medico();
-//        if (agendarCitaPacienteDTO.fechaCita().equals(medico.getHorarioMedicoList().get(0).getDia())) {
-//            return false;
-//        }else {
-//            return true;
-//        }
+        return verificar;
     }
 
     private boolean verificarCitaHorarioMedico(AgendarCitaPacienteDTO agendarCitaPacienteDTO) {
@@ -249,10 +241,6 @@ public class PacienteServicioImpl implements PacienteServicio {
         }
 
         return false;
-//        if (agendarCitaPacienteDTO.fechaCita().equals(paciente.getCitaPacienteList().get(0).getFechaCita())){
-//            return false;
-//        }
-//        return true;
     }
 
     @Override
@@ -434,7 +422,7 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public DetatellePacienteDTO verDetallePaciente(int codigo) throws Exception {
+    public DetallePacienteDTO verDetallePaciente(int codigo) throws Exception {
 
         Optional<Paciente> opcional = pacienteRepo.findById(codigo);
 
@@ -449,7 +437,7 @@ public class PacienteServicioImpl implements PacienteServicio {
         buscado.toString();
 
         //Hacemos un mapeo de un objeto a tipo Paciente a un objeto de tipo DetallePacienteDTO
-        return new DetatellePacienteDTO(
+        return new DetallePacienteDTO(
                 buscado.getCodigo(),
                 buscado.getCorreo(),
                 buscado.getNombre(),

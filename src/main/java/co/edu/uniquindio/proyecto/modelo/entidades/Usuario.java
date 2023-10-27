@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Usuario extends Cuenta implements Serializable {
     @Column(nullable = false, length = 10)
     private String cedula;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 200)
     private String nombre;
     @Column(nullable = false, length = 10)
     private String telefono;

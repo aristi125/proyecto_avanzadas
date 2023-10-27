@@ -3,7 +3,6 @@ package co.edu.uniquindio.proyecto.test;
 import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
 import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
 import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
-import co.edu.uniquindio.proyecto.dto.admin.ItemCitaDTOAdmin;
 import co.edu.uniquindio.proyecto.dto.paciente.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.Cita;
 import co.edu.uniquindio.proyecto.modelo.entidades.Medico;
@@ -12,9 +11,7 @@ import co.edu.uniquindio.proyecto.modelo.entidades.Paciente;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.*;
 import co.edu.uniquindio.proyecto.modelo.repositorios.CitaRepo;
 import co.edu.uniquindio.proyecto.modelo.repositorios.PacienteRepo;
-import co.edu.uniquindio.proyecto.modelo.servicios.impl.AdministradorServicioImpl;
 import co.edu.uniquindio.proyecto.modelo.servicios.impl.PacienteServicioImpl;
-import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.PacienteServicio;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -64,8 +61,8 @@ public class PacienteServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void editarPerfilTest() throws Exception {
-        DetatellePacienteDTO guardado = pacienteServicio.verDetallePaciente(1);
-        DetatellePacienteDTO modificado = new DetatellePacienteDTO(
+        DetallePacienteDTO guardado = pacienteServicio.verDetallePaciente(1);
+        DetallePacienteDTO modificado = new DetallePacienteDTO(
                 guardado.codigo(),
                 guardado.correo(),
                 guardado.nombre(),
@@ -81,7 +78,7 @@ public class PacienteServicioTest {
         //se invoca el servicio de actualizar los datos
         pacienteServicio.editarPerfil(modificado);
         //Se obtiene nuevamente el paciente para comprobar que si se haya actualizado
-        DetatellePacienteDTO objetoModificado = pacienteServicio.verDetallePaciente(1);
+        DetallePacienteDTO objetoModificado = pacienteServicio.verDetallePaciente(1);
         //se comprueba que el teledonodel paciente sea el que se le asigno en la actualizacion
         Assertions.assertEquals("3217122375", objetoModificado.telefono());
     }

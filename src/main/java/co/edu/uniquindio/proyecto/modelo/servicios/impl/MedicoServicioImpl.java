@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class MedicoServicioImpl implements MedicoServicio {
         Cita cita = opcional.get();
         Atencion atencion = new Atencion();
 
-        if (cita.getFechaCita().isEqual(LocalDateTime.now())){
+        if (LocalDate.from(cita.getFechaCita()).isEqual(LocalDate.now())){
 
             atencion.setCodigoCita(cita);
             atencion.setDiagnostico(dto.diagnostico());
@@ -109,14 +110,18 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
 
     @Override
-    public void agendarDiaLibre(DiaLibreDTO diaLibreDTO) throws Exception {
+    public int agendarDiaLibre(DiaLibreDTO diaLibreDTO) throws Exception {
 
         List<Cita> citasProgramadas = citaRepo.obtenerCitasMedico(diaLibreDTO.codigo(), diaLibreDTO.diaLibre());
         Optional<Medico> optional = medicoRepo.findById(diaLibreDTO.codigo());
 
+        if(optional.isEmpty() ){
+            throw new Exception("No existe un médico con el código "+diaLibreDTO.codigo());
+        }
+
         //Solo puede haber un día libre activo
 
-        if(citasProgramadas.size() > 0){
+        if(!citasProgramadas.isEmpty()){
             throw new Exception("No se puede agendar este día porque ya tiene citas");
         }else{
 
@@ -124,7 +129,7 @@ public class MedicoServicioImpl implements MedicoServicio {
             diaLibre.setDia(diaLibreDTO.diaLibre());
             diaLibre.setCodigoMedico(optional.get());
 
-            diaLibreRepo.save(diaLibre);
+            return diaLibreRepo.save(diaLibre).getCodigo();
         }
 
     }

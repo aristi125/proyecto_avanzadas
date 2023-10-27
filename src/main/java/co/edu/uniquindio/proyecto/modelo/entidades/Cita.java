@@ -2,6 +2,8 @@ package co.edu.uniquindio.proyecto.modelo.entidades;
 
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -19,8 +21,11 @@ public class Cita implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
+
     private LocalDateTime fechaCreacion;
+
     private LocalDateTime fechaCita;
+
     private String motivo;
 
     //LLAVES FORANEAS

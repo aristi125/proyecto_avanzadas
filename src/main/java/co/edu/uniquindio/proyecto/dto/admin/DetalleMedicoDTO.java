@@ -22,7 +22,7 @@ public record DetalleMedicoDTO(
         Especialidad especialidad,
         @NotEmpty @Length(max = 20)
         String telefono,
-        @NotEmpty @Length(max = 80)
+        @NotEmpty @Length(max = 100)
         String correo,
         @NotEmpty
         String urlFoto,

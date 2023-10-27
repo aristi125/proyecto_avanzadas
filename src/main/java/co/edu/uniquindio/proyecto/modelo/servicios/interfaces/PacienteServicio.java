@@ -11,7 +11,7 @@ import java.util.List;
 public interface PacienteServicio {
     int registrarse(RegistroPacienteDTO registroPacienteDTO) throws Exception;
 
-    int editarPerfil(DetatellePacienteDTO detatellePacienteDTO) throws Exception;
+    int editarPerfil(DetallePacienteDTO detallePacienteDTO) throws Exception;
 
     void eliminarCuenta(int codigo) throws Exception;
 
@@ -32,7 +32,7 @@ public interface PacienteServicio {
     List<ItemCitaPendientePacienteDTO> filtrarCitasPorFecha(ItemCitaPendientePacienteDTO fechaPacienteDTO) throws Exception;
 
     List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(int codigopaciente, String nombreMedico) throws Exception;
-    DetatellePacienteDTO verDetallePaciente(int codigo) throws Exception;
+    DetallePacienteDTO verDetallePaciente(int codigo) throws Exception;
 
     List<ItemPacienteDTO> verHistorialCita() throws Exception;
 }

@@ -17,7 +17,7 @@ public class Cuenta implements Serializable {
     private int codigo;
     @Column(nullable = false, length = 100)
     private String correo;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 200)
     private String password;
 
     //LLAVES FORANEAS

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
-public record DetatellePacienteDTO(
+public record DetallePacienteDTO(
         @Positive
         int codigo,
         String correo,

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.AbstractQueue;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface CitaRepo extends JpaRepository<Cita,Integer> {
     @Query("select c from Cita c where c.medico.codigo = :codigo and c.estado <> :estadoCita")
     List<Cita> obtenerCitasMedico(@Param("codigo") int codigo, @Param("estadoCita") EstadoCita estadoCita);
 
-    @Query("select c from Cita c where c.medico.codigo = :codigo and c.fechaCita = :fecha")
+    @Query("select c from Cita c where c.medico.codigo = :codigo and date(c.fechaCita) = :fecha")
     List<Cita> obtenerCitasMedico(int codigo, LocalDate fecha);
 
 }

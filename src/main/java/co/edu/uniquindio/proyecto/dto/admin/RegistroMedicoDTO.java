@@ -22,9 +22,9 @@ public record RegistroMedicoDTO(
         Especialidad especialidad,
         @NotBlank @Length(max = 20)
         String telefono,
-        @NotNull @Length(max = 80) @Email
+        @NotNull @Length(max = 100) @Email
         String correo,
-        @NotNull
+        @NotNull @Length(max = 200)
         String password,
         @NotNull
         String urlFoto,

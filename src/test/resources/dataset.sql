@@ -22,7 +22,7 @@ insert into medico values('01478523', 'CARTAGENA', 'ACTIVO', 'Maria', '321712237
 insert into medico values('0147852', 'BOGOTA', 'ACTIVO', 'Daniela', '3217122375', 'no_tiene', 'CARDIOLGIA', 9);
 insert into medico values('014785', 'CALI', 'ACTIVO', 'Muricio', '3217122375', 'no_tiene', 'PEDIATRA', 10);
 
-insert into cita values (1, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 1);
+insert into cita values (1, 'PROGRAMADA', '2023-10-25 18:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 1);
 insert into cita values (2, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 2);
 insert into cita values (3,'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 7, 3);
 insert into cita values (4, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 10, 4);
@@ -40,11 +40,10 @@ insert into horario_medico values(3, 'LUNES - VIERNES', '8:00:00', '17:00:00',8)
 insert into horario_medico values(4, 'MARTES - SABADO', '8:00:00', '17:00:00',9);
 insert into horario_medico values(5, 'LUNES - VIERNES', '8:00:00', '17:00:00',10);
 
-insert into atencion values(1,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debe tomar acetaminofen', 1);
-insert into atencion values(2,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 2);
-insert into atencion values(3,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 3);
-insert into atencion values(4,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 4);
-insert into atencion values(5,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 5);
+insert into atencion values(1,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 2);
+insert into atencion values(2,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 3);
+insert into atencion values(3,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 4);
+insert into atencion values(4,'Al paciente lo pico una aveja', 'se le inflamo el cueyo', 'el paciente debde tomar acetaminofen', 5);
 
 insert into pqrs values (1,'APROBADO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa', 1);
 insert into pqrs values (2, 'EN_PROCESO', '2023-10-18 13:32:00', 'El medio me atendio mal', 'me pico una avispa', 2);
