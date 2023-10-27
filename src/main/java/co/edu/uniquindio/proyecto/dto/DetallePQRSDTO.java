@@ -7,7 +7,7 @@ import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoPQRS;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@bodyrequest
+
 public record DetallePQRSDTO(
         int codigo,
         EstadoPQRS estado,
