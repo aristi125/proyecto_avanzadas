@@ -22,7 +22,7 @@ insert into medico values('01478523', 'CARTAGENA', 'ACTIVO', 'Maria', '321712237
 insert into medico values('0147852', 'BOGOTA', 'ACTIVO', 'Daniela', '3217122375', 'no_tiene', 'CARDIOLGIA', 9);
 insert into medico values('014785', 'CALI', 'ACTIVO', 'Muricio', '3217122375', 'no_tiene', 'PEDIATRA', 10);
 
-insert into cita values (1, 'PROGRAMADA', '2023-10-25 18:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 1);
+insert into cita values (1, 'PROGRAMADA', '2023-10-26 18:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 1);
 insert into cita values (2, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 6, 2);
 insert into cita values (3,'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 7, 3);
 insert into cita values (4, 'PROGRAMADA', '2023-10-20 10:30:00', '2023-10-18 10:30:00','alergias por picadura de aveja', 10, 4);

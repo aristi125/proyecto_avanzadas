@@ -56,7 +56,7 @@ public class MedicoServicioTest {
     @Sql("classpath:dataset.sql")
     public void listasUnaCitasPacienteTest(){
         try{
-            List<HistorialPacienteDTO> citas = medicoServicio.listasUnaCitasPaciente(1);
+            List<HistorialPacienteDTO> citas = medicoServicio.listasUnaCitasPaciente(2);
             Assertions.assertNotNull(citas);
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -65,7 +65,7 @@ public class MedicoServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void agendarDiaLibre(){
-        LocalDate fechaLibre = LocalDate.of(2023, 10, 20);
+        LocalDate fechaLibre = LocalDate.of(2023, 12, 24);
         DiaLibreDTO diaLibreDTO = new DiaLibreDTO(
                 6,
                 fechaLibre
@@ -83,7 +83,7 @@ public class MedicoServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarTodasCitasPacientes(){
         try{
-            List<HistorialPacienteDTO> citas = medicoServicio.listarTodasCitasPacientes(1);
+            List<HistorialPacienteDTO> citas = medicoServicio.listarTodasCitasPacientes(2);
             Assertions.assertNotNull(citas);
         }catch (Exception e){
             throw new RuntimeException(e);
