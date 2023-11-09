@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.modelo.entidades;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.core.codec.StringDecoder;
 
@@ -17,14 +18,18 @@ public class Atencion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
+
     @Column(nullable = false, length = 200)
     private String diagnostico;
-    @Column(length = 200)
+
+    @Column(nullable = false, length = 200)
     private String tratamiento;
-    @Column(length = 200)
+
+    @Column(nullable = false, length = 200)
     private String notasMedicas;
 
     //LLAVES FORANEAS
+    @JoinColumn(nullable = false)
     @OneToOne
     private Cita codigoCita;
 }

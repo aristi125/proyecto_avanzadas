@@ -1,11 +1,9 @@
 package co.edu.uniquindio.proyecto.modelo.servicios.impl;
 
-import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
-import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
-import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
-import co.edu.uniquindio.proyecto.dto.RespuestaDTO;
+import co.edu.uniquindio.proyecto.dto.*;
 import co.edu.uniquindio.proyecto.dto.paciente.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.*;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoCita;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoPQRS;
 import co.edu.uniquindio.proyecto.modelo.repositorios.*;
@@ -121,13 +119,19 @@ public class PacienteServicioImpl implements PacienteServicio {
     @Override
     public void eliminarCuenta(int codigo) throws Exception {
 
-        Optional<Paciente> opcional = pacienteRepo.findById(codigo);
-
-        if (opcional.isEmpty()){
+        //NO SE SI SEA NECESARIO
+        List<Paciente> pacientes = pacienteRepo.findByEliminarcuentaPaciente(codigo);
+        if (pacientes.isEmpty()){
             throw new Exception("No existe un paciente con el codigo: "+ codigo);
         }
+        //SE LE ESTA CAMBIANDO EL ESTADO DE ACTIVO A INACTIVO
+        for (Paciente p: pacientes){
+            if (p.getEstadoUsuario().equals(Estado.ACTIVO)){
+                p.setEstadoUsuario(Estado.INACTIVO);
+                pacienteRepo.save(p);
+            }
+        }
 
-        pacienteRepo.delete(opcional.get());
     }
 
     @Override
@@ -156,6 +160,7 @@ public class PacienteServicioImpl implements PacienteServicio {
         pacienteRepo.save(buscado);
     }
 
+    //REVISAR
     @Override
     public int agendarCita(AgendarCitaPacienteDTO agendarCitaPacienteDTO) throws Exception {
 
@@ -244,12 +249,13 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public PQRS crearPQRS(int codigo, String tipo, String motivo)throws Exception {
+    public PQRS crearPQRS(CrearPQRSDTO crearPqrsdto)throws Exception {
 
         LocalDateTime fecha = LocalDateTime.now();
         //codigo es el codigo del paciente
-        int codigoPaciente = codigo;
-        String tipoPqrs = tipo, motivoPqrs = motivo;
+        int codigoPaciente = crearPqrsdto.codigo();
+        String tipoPqrs = crearPqrsdto.tipo();
+        String motivoPqrs = crearPqrsdto.motivo();
         PQRS pqrs = new PQRS();
 
         List<PQRS> pqrsPaciente = pqrsRepo.listarPqrsDePaciente(codigoPaciente);
@@ -274,9 +280,9 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public List<ItemPQRSDTO> listarPQRSPaciente() throws Exception {
+    public List<ItemPQRSDTO> listarPQRSPaciente(int codigo) throws Exception {
 
-        List<PQRS> listaPqrs = pqrsRepo.findAll();
+        List<PQRS> listaPqrs = pqrsRepo.listarPqrsDePaciente(codigo);
         List<ItemPQRSDTO> respuesta = new ArrayList<>();
 
         for(PQRS p: listaPqrs){
@@ -352,17 +358,15 @@ public class PacienteServicioImpl implements PacienteServicio {
         return respuesta.getCodigo();
     }
 
+
     @Override
     public List<ItemCitaPendientePacienteDTO> listarCitasPaciente(int codigo) throws Exception {
 
-        List<Cita> citas = citaRepo.findAll();
+        List<Cita> historial = citaRepo.obtenerHistorialPaciente(codigo);
         List<ItemCitaPendientePacienteDTO> respuesta = new ArrayList<>();
 
-        if (citas.isEmpty()){
-            throw new Exception("No existe citas creadas");
-        }
-
-        for (Cita c: citas){
+        //Hacemos un mapeo de cada uno de los objetos de tipo Paciente a tipo objeto ItempacienteDTO
+        for (Cita c: historial){
             respuesta.add(new ItemCitaPendientePacienteDTO(
                     c.getCodigo(),
                     c.getMedico().getCedula(),
@@ -376,10 +380,9 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public List<ItemCitaPendientePacienteDTO> filtrarCitasPorFecha(ItemCitaPendientePacienteDTO fechaPacienteDTO) throws Exception {
+    public List<ItemCitaPendientePacienteDTO> filtrarCitasPorFecha(FiltroBusquedaDTO filtroBusquedaDTO) throws Exception {
 
-        Paciente opcional = pacienteRepo.findByCitaPacienteListFechaCita(fechaPacienteDTO.fechaCita());
-        List<Cita> citas = citaRepo.findAll();
+        List<Cita> citas = citaRepo.obtenerCitasFecha(filtroBusquedaDTO.codigoPaciente(), filtroBusquedaDTO.fecha());
         List<ItemCitaPendientePacienteDTO> respuesta = new ArrayList<>();
 
         if (citas.isEmpty()){
@@ -400,14 +403,37 @@ public class PacienteServicioImpl implements PacienteServicio {
     }
 
     @Override
-    public List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(int codigopaciente, String nombreMedico) throws Exception {
-        List<Cita> citas = pacienteRepo.listarCitasPacienteMedico(codigopaciente, nombreMedico);
+    public List<ItemCitaPendientePacienteDTO> filtrarCitasPorMedico(FiltroBusquedaDTO filtroBusquedaDTO) throws Exception {
+
+        List<Cita> citas = citaRepo.obtenerCitasNombreMedico(filtroBusquedaDTO.codigoPaciente(), filtroBusquedaDTO.nombreMedico());
         List<ItemCitaPendientePacienteDTO> respuesta = new ArrayList<>();
 
         if (citas.isEmpty()){
             throw new Exception("No existe cita creadas");
         }
     //organizar
+        for (Cita c: citas){
+            respuesta.add(new ItemCitaPendientePacienteDTO(
+                    c.getCodigo(),
+                    c.getMedico().getCedula(),
+                    c.getMedico().getNombre(),
+                    c.getFechaCita(),
+                    c.getMedico().getEspecialidad(),
+                    c.getEstado()));
+        }
+
+        return respuesta;
+    }
+
+    @Override
+    public List<ItemCitaPendientePacienteDTO> listarMedicosEspecialidad(MedicoEspecialidadDTO especialidadDTO) throws Exception{
+        List<Cita> citas = citaRepo.listarMedicosEspecialidad(especialidadDTO.codigoPaciente(), especialidadDTO.especialidad());
+        List<ItemCitaPendientePacienteDTO> respuesta = new ArrayList<>();
+
+        if (citas.isEmpty()){
+            throw new Exception("No existe cita creadas");
+        }
+        //organizar
         for (Cita c: citas){
             respuesta.add(new ItemCitaPendientePacienteDTO(
                     c.getCodigo(),
@@ -451,22 +477,4 @@ public class PacienteServicioImpl implements PacienteServicio {
                 buscado.getTipoSangre());
     }
 
-    @Override
-    public List<ItemPacienteDTO> verHistorialCita() throws Exception {
-
-        List<Cita> historial = citaRepo.obtenerHistorialPaciente(1);
-        List<Paciente> pacientes = new ArrayList<>();
-        List<ItemPacienteDTO> respuesta = new ArrayList<>();
-
-        //Hacemos un mapeo de cada uno de los objetos de tipo Paciente a tipo objeto ItempacienteDTO
-        for (Paciente p: pacientes){
-            respuesta.add(new ItemPacienteDTO(
-                    p.getCodigo(),
-                    p.getNombre(),
-                    p.getCedula(),
-                    p.getCiudad()));
-        }
-
-        return respuesta;
-    }
 }

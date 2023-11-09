@@ -19,17 +19,22 @@ import java.util.List;
 @AllArgsConstructor
 public class Paciente extends Usuario implements Serializable {
     //LLAVE PRIMARIA
-    @NotNull
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
-    @NotNull
+
+    @Column(nullable = false)
     private String alergias;
 
-    //LLAVES FORANEAS
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EPS eps;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoSangre tipoSangre;
+
+    //LLAVES FORANEAS
+    @JoinColumn(nullable = false)
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citaPacienteList;
 

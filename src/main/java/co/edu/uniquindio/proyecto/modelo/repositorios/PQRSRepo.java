@@ -12,4 +12,6 @@ public interface PQRSRepo extends JpaRepository<PQRS, Integer> {
 
     @Query("select p from PQRS p where p.cita.paciente.codigo =:codigoPaciente")
     List<PQRS> listarPqrsDePaciente(int codigoPaciente);
+
+
 }

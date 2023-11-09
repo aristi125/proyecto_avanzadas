@@ -10,16 +10,19 @@ import java.util.List;
 
 public record RegistroMedicoDTO(
         //PREFUNTAR SI SE PUEDE HACER ESO
-        @Column(nullable = false, length = 200)
         @NotBlank
         @Length(max = 200)
         String nombre,
+
         @NotBlank @Length(max = 10)
         String cedula,
+
         @NotNull @Min(0) @Max(3)
         Ciudad ciudad,
+
         @NotNull @Min(0) @Max(5)
         Especialidad especialidad,
+
         @NotBlank @Length(max = 20)
         String telefono,
         @NotNull @Length(max = 100) @Email

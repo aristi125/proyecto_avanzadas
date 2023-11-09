@@ -138,14 +138,14 @@ public class MedicoServicioImpl implements MedicoServicio {
     public List<HistorialPacienteDTO> listarTodasCitasPacientes(int codigo) throws Exception {
 
         //List<Cita> citasHistorial = citaRepo.obtenerHistorialPaciente(codigo, EstadoCita.COMPLETA);
-        Optional<Paciente> opcional = pacienteRepo.findById(codigo);
+        Optional<Medico> opcional = medicoRepo.findById(codigo);
         List<Cita> citasHistorial= citaRepo.obtenerHistorialPaciente(codigo);
 
         if (citasHistorial.isEmpty()){
             throw new Exception("El paciente con el codigo "+codigo+" no a registrado citas");
         }
 
-        Paciente paciente = opcional.get();
+        Medico paciente = opcional.get();
         List<HistorialPacienteDTO> respuesta = new ArrayList<>();
 
         for (Cita c : citasHistorial) {

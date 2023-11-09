@@ -1,8 +1,6 @@
 package co.edu.uniquindio.proyecto.test;
 
-import co.edu.uniquindio.proyecto.dto.DetallePQRSDTO;
-import co.edu.uniquindio.proyecto.dto.ItemPQRSDTO;
-import co.edu.uniquindio.proyecto.dto.RegistroRespuestaDTO;
+import co.edu.uniquindio.proyecto.dto.*;
 import co.edu.uniquindio.proyecto.dto.paciente.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.Cita;
 import co.edu.uniquindio.proyecto.modelo.entidades.Medico;
@@ -138,9 +136,9 @@ public class PacienteServicioTest {
     public void crearPQRS(){
 
         try {
-            PQRS pqrs =  pacienteServicio.crearPQRS(10,
+            PQRS pqrs =  pacienteServicio.crearPQRS( new CrearPQRSDTO(10,
                     "me duele el cuerpo",
-                    "mi novia es muy toxica");
+                    "mi novia es muy toxica"));
             Assertions.assertNotNull(pqrs);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -151,7 +149,7 @@ public class PacienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarPQRSPaciente(){
         try{
-            List<ItemPQRSDTO> pqrs = pacienteServicio.listarPQRSPaciente();
+            List<ItemPQRSDTO> pqrs = pacienteServicio.listarPQRSPaciente(1);
             Assertions.assertNotNull(pqrs);
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -199,13 +197,11 @@ public class PacienteServicioTest {
             Medico medico = new Medico();
             Cita cita = new Cita();
             List<ItemCitaPendientePacienteDTO> pendientes = null;
-            pendientes =  pacienteServicio.filtrarCitasPorFecha(new ItemCitaPendientePacienteDTO(
-                    cita.getCodigo(),
-                    medico.getCedula(),
-                    medico.getNombre(),
-                    cita.getFechaCita(),
-                    Especialidad.CARDIOLGIA,
-                    EstadoCita.PROGRAMADA));
+            pendientes =  pacienteServicio.filtrarCitasPorFecha( new FiltroBusquedaDTO(
+                    1,
+                    LocalDate.now(),
+                    "hola"
+            ));
             Assertions.assertNotNull(pendientes);
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -218,19 +214,16 @@ public class PacienteServicioTest {
 
         try {
             List<ItemCitaPendientePacienteDTO> pendientes = null;
-            pendientes =  pacienteServicio.filtrarCitasPorMedico(1, "Andres");
+            pendientes =  pacienteServicio.filtrarCitasPorMedico( new FiltroBusquedaDTO(
+                    1,
+                    LocalDate.now(),
+                    "hola"
+                    )
+            );
             Assertions.assertNotNull(pendientes);
         }catch (Exception e){
             throw new RuntimeException(e);
         }
 
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void verHistorialCita() throws Exception {
-        //obtenemos la lista de todos los paciente
-        List<ItemPacienteDTO> historialPaciete = pacienteServicio.verHistorialCita();
-        //si en el dataset creamos 5 pacientes, entonces el tamaño de la lista debe ser 5
-        Assertions.assertEquals(0, historialPaciete.size());
     }
 }

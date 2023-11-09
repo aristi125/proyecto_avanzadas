@@ -3,8 +3,7 @@ package co.edu.uniquindio.proyecto.modelo.servicios.impl;
 import co.edu.uniquindio.proyecto.dto.*;
 import co.edu.uniquindio.proyecto.dto.admin.*;
 import co.edu.uniquindio.proyecto.modelo.entidades.*;
-import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado;
-import co.edu.uniquindio.proyecto.modelo.enumeracion.EstadoPQRS;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.*;
 import co.edu.uniquindio.proyecto.modelo.repositorios.*;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.AdministradorServicio;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,11 +102,19 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         Optional<Medico> opcional = medicoRepo.findById(medicoDTO.codigo());
 
-        if (opcional.isEmpty()){
-            throw new Exception("No exisite un medico con el codigo "+ medicoDTO.codigo());
+        if (opcional.isEmpty()) {
+            throw new Exception("No exisite un medico con el codigo " + medicoDTO.codigo());
         }
 
         Medico buscado = opcional.get();
+
+        //YA SE ORGANIZO LAS VALIDACIONES DEL CORREO Y LA CEDULA
+        if (estaRepetidoCedula(buscado.getCedula(), medicoDTO.cedula())){
+            throw  new Exception("El correo esta en uso");
+        }
+        if( estaRepetidoCorreo(buscado.getCorreo(), medicoDTO.correo()) ){
+            throw new Exception("El correo está en uso ");
+        }
 
         buscado.setNombre(medicoDTO.nombre());
         buscado.setCedula(medicoDTO.cedula());
@@ -117,10 +125,40 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         //preguntar
         buscado.setCiudad(medicoDTO.ciudad());
 
-        //guarda el buscado y actualiza los datos
+        //METODO PARA ACTUALIZAR LOS HORARIOS
+        List<HorarioMedico> horarioMedicos = actializarHorarioMedico(medicoDTO.horarios());
+        buscado.setHorarioMedicoList(horarioMedicos);
         medicoRepo.save(buscado);
         return buscado.getCodigo();
 
+    }
+
+    public boolean estaRepetidoCorreo(String correoViejo, String correoNuevo){
+        if (!correoNuevo.equals(correoViejo)) {
+            if (medicoRepo.findByCorreo(correoNuevo) != null){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean estaRepetidoCedula(String cedulaVieja, String cedulaNueva){
+        if(!cedulaNueva.equals(cedulaVieja)){
+            if (medicoRepo.findByCedula(cedulaNueva) != null){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private List<HorarioMedico> actializarHorarioMedico(List<HorarioDTO> horarios) {
+        List<HorarioMedico> horariosMedico = new ArrayList<>();
+        for (HorarioDTO horario: horarios){
+            HorarioMedico actualizarHorario = new HorarioMedico();
+            horariosMedico.add(actualizarHorario);
+        }
+        return horariosMedico;
     }
 
     @Override
@@ -317,5 +355,23 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         return respuesta;
 
+    }
+
+    //CLINICA
+
+    //COMO SE LES PONE LA EXCEPCION ?????
+    @Override
+    public List<Ciudad> listarCiudades(){
+        return Arrays.asList(Ciudad.values());
+    }
+
+    @Override
+    public List<Especialidad> listarEspecialidadesMedico(){
+        return Arrays.asList(Especialidad.values());
+    }
+
+    @Override
+    public List<EPS> listarEPS() {
+        return Arrays.asList(EPS.values());
     }
 }

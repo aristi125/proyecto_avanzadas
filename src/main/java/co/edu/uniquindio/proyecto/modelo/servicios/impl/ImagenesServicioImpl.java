@@ -20,16 +20,15 @@ public class ImagenesServicioImpl implements ImagenesServicio {
     private final Cloudinary cloudinary;
     public ImagenesServicioImpl(){
         Map<String, String> config = new HashMap<>();
-        config.put("cloud_name", "SU_CLOUD_NAME");
-        config.put("api_key", "SU_API_KEY");
-        config.put("api_secret", "SU_API_SECRET");
+        config.put("cloud_name", "djiooxqhw");
+        config.put("api_key", "484645224663438");
+        config.put("api_secret", "Fb_4Davv2dohMzvzGYclFwt9gG8");
         cloudinary = new Cloudinary(config);
     }
     @Override
     public Map subirImagen(MultipartFile imagen) throws Exception {
         File file = convertir(imagen);
-        return cloudinary.uploader().upload(file, ObjectUtils.asMap("folder",
-                "uniquindio/proyecto/fotos"));
+        return cloudinary.uploader().upload(file, ObjectUtils.asMap("folder", "uniquindio/proyecto/fotos"));
     }
 
     @Override
