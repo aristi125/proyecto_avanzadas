@@ -137,7 +137,6 @@ public class MedicoServicioImpl implements MedicoServicio {
     @Override
     public List<HistorialPacienteDTO> listarTodasCitasPacientes(int codigo) throws Exception {
 
-        //List<Cita> citasHistorial = citaRepo.obtenerHistorialPaciente(codigo, EstadoCita.COMPLETA);
         Optional<Medico> opcional = medicoRepo.findById(codigo);
         List<Cita> citasHistorial= citaRepo.obtenerHistorialPaciente(codigo);
 

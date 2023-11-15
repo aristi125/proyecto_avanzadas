@@ -25,7 +25,5 @@ public interface AdministradorServicio {
     int responderPQRS(RegistroRespuestaDTO registroRespuestaDTO) throws Exception;
     void cambiarEstadoPQRS(int codigoPQRS, EstadoPQRS estadoPQRS) throws Exception;
     List<ItemCitaDTOAdmin> listarCitas () throws Exception;
-    List<Ciudad> listarCiudades();
-    List<Especialidad> listarEspecialidadesMedico();
-    List<EPS> listarEPS();
+
 }

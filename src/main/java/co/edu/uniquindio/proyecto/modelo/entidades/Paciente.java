@@ -34,7 +34,7 @@ public class Paciente extends Usuario implements Serializable {
     private TipoSangre tipoSangre;
 
     //LLAVES FORANEAS
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citaPacienteList;
 

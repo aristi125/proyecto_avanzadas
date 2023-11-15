@@ -16,8 +16,11 @@ public record HistorialPacienteDTO(
         String nombre,
         @NotEmpty @Length(max = 10)
         String cedula,
+        @NotNull
         String tratamiento,
+        @NotNull
         String diagnostico,
+        @NotNull
         String notasMedicas,
         @NotEmpty
         String motivo

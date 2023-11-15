@@ -83,20 +83,4 @@ public class AdministradorController {
         return ResponseEntity.ok().body(new MensajeDTO<>(false, administradorServicio.listarCitas()));
     }
 
-    //SE AGREGARON LOS DEMAS CAMPOS DE LA CLINICA QUE SAQUE 0
-    @GetMapping("/listar-ciudades")
-    public ResponseEntity<MensajeDTO<List<Ciudad>>> listarCiudades(){
-        return ResponseEntity.ok().body(new MensajeDTO<>(false, administradorServicio.listarCiudades()));
-    }
-
-    @GetMapping("/listar-especialidades")
-    public ResponseEntity<MensajeDTO<List<Especialidad>>> listarEspecialidadesMedico(){
-        return ResponseEntity.ok().body(new MensajeDTO<>(false, administradorServicio.listarEspecialidadesMedico()));
-    }
-
-    @GetMapping("/listar-eps")
-    public ResponseEntity<MensajeDTO<List<EPS>>> listarEPS(){
-        return ResponseEntity.ok().body(new MensajeDTO<>(false, administradorServicio.listarEPS()));
-    }
-
 }

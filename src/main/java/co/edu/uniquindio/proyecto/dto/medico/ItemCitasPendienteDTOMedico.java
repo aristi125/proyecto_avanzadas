@@ -12,8 +12,11 @@ public record ItemCitasPendienteDTOMedico(
         String nombrePaciente,
         @NotEmpty
         String urlFoto,
+        @NotEmpty
         LocalDateTime fechaCitasFutura,
+        @NotEmpty
         EPS eps,
+        @NotEmpty
         EstadoCita estadoCita
 ) {
 }

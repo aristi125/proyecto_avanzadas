@@ -120,16 +120,16 @@ public class PacienteServicioImpl implements PacienteServicio {
     public void eliminarCuenta(int codigo) throws Exception {
 
         //NO SE SI SEA NECESARIO
-        List<Paciente> pacientes = pacienteRepo.findByEliminarcuentaPaciente(codigo);
-        if (pacientes.isEmpty()){
+        Optional<Paciente> pacienteOptional = pacienteRepo.findById(codigo);
+        if (pacienteOptional.isEmpty()){
             throw new Exception("No existe un paciente con el codigo: "+ codigo);
         }
-        //SE LE ESTA CAMBIANDO EL ESTADO DE ACTIVO A INACTIVO
-        for (Paciente p: pacientes){
-            if (p.getEstadoUsuario().equals(Estado.ACTIVO)){
-                p.setEstadoUsuario(Estado.INACTIVO);
-                pacienteRepo.save(p);
-            }
+
+        Paciente paciente = pacienteOptional.get();
+
+        if (paciente.getEstadoUsuario().equals(Estado.ACTIVO)){
+            paciente.setEstadoUsuario(Estado.INACTIVO);
+            pacienteRepo.save(paciente);
         }
 
     }
@@ -207,18 +207,13 @@ public class PacienteServicioImpl implements PacienteServicio {
 
     private boolean verificarDiaLibremedico(AgendarCitaPacienteDTO agendarCitaPacienteDTO) {
 
-        List<Medico> medicoList = new ArrayList<>();
-        //primera forma que se me ocurrio
-        LocalDateTime fechaLibre = null;
-        boolean verificar = false;
+        List<DiaLibre> medicoList = medicoRepo.buscarDiaLibre(agendarCitaPacienteDTO.codigoMedico(), agendarCitaPacienteDTO.fechaCita());
 
-        for (Medico m: medicoList){
-            fechaLibre = LocalDateTime.from(m.getDia_libreList().get(0).getDia());
-            if (agendarCitaPacienteDTO.fechaCita().isEqual(fechaLibre)) {
-                verificar = true;
-            }
+        if(!medicoList.isEmpty()){
+            return true;
         }
-        return verificar;
+
+        return false;
     }
 
     private boolean verificarCitaHorarioMedico(AgendarCitaPacienteDTO agendarCitaPacienteDTO) {
@@ -290,8 +285,7 @@ public class PacienteServicioImpl implements PacienteServicio {
                     p.getCodigo(),
                     p.getEstado(),
                     p.getMotivo(),
-                    p.getFechaCreacion(),
-                    p.getCita().getPaciente().getNombre()));
+                    p.getFechaCreacion()));
         }
 
         return respuesta;
@@ -364,7 +358,9 @@ public class PacienteServicioImpl implements PacienteServicio {
 
         List<Cita> historial = citaRepo.obtenerHistorialPaciente(codigo);
         List<ItemCitaPendientePacienteDTO> respuesta = new ArrayList<>();
-
+        if(historial.isEmpty()){
+            throw new Exception("No ha tenido ninguna cita");
+        }
         //Hacemos un mapeo de cada uno de los objetos de tipo Paciente a tipo objeto ItempacienteDTO
         for (Cita c: historial){
             respuesta.add(new ItemCitaPendientePacienteDTO(

@@ -247,8 +247,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
                     p.getCodigo(),
                     p.getEstado(),
                     p.getMotivo(),
-                    p.getFechaCreacion(),
-                    p.getCita().getPaciente().getNombre()));
+                    p.getFechaCreacion()));
         }
 
         return respuesta;
@@ -357,21 +356,4 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
     }
 
-    //CLINICA
-
-    //COMO SE LES PONE LA EXCEPCION ?????
-    @Override
-    public List<Ciudad> listarCiudades(){
-        return Arrays.asList(Ciudad.values());
-    }
-
-    @Override
-    public List<Especialidad> listarEspecialidadesMedico(){
-        return Arrays.asList(Especialidad.values());
-    }
-
-    @Override
-    public List<EPS> listarEPS() {
-        return Arrays.asList(EPS.values());
-    }
 }

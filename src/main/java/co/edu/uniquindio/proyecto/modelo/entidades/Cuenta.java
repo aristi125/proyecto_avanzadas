@@ -24,7 +24,7 @@ public class Cuenta implements Serializable {
     private String password;
 
     //LLAVES FORANEAS
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     @OneToMany(mappedBy = "cuenta")
     private List<Mensaje> mensajeList;
 }

@@ -2,11 +2,9 @@ package co.edu.uniquindio.proyecto.controladores;
 
 import co.edu.uniquindio.proyecto.dto.*;
 import co.edu.uniquindio.proyecto.dto.paciente.*;
-import co.edu.uniquindio.proyecto.modelo.entidades.PQRS;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.PacienteServicio;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +16,12 @@ import java.util.List;
 public class PacienteController {
 
     private final PacienteServicio pacienteServicio;
+
+    @PostMapping("/registrar")
+    public ResponseEntity<MensajeDTO<String>> registrarse(@Valid @RequestBody RegistroPacienteDTO registroPacienteDTO) throws Exception{
+        pacienteServicio.registrarse(registroPacienteDTO);
+        return ResponseEntity.ok().body(new MensajeDTO<>(false, "Se registro correctamente el paciente"));
+    }
 
     @PutMapping("/editar-perfil")
     public ResponseEntity<MensajeDTO<String>> editarPerfil(@Valid @RequestBody DetallePacienteDTO pacienteDTO) throws Exception{
@@ -31,10 +35,10 @@ public class PacienteController {
     }
     //TOCA HACERLO
     @PutMapping("/enviar-link-recuperacion")
-    public void enviarLinkRecuperacion(@Valid @RequestBody RecupararPasswordPacienteDTO passwordPacienteDTO) throws Exception{
-
+    public ResponseEntity<MensajeDTO <String>> enviarLinkRecuperacion(@Valid @RequestBody RecupararPasswordPacienteDTO passwordPacienteDTO) throws Exception{
+        pacienteServicio.enviarLinkRecuperacion(passwordPacienteDTO);
+        return ResponseEntity.ok().body(new MensajeDTO<>(false, "Se envio correctamente el link de recuperacion"));
     }
-
     @PutMapping("/cambiar-password")
     public ResponseEntity<MensajeDTO <String>> cambiarPassword(@Valid @RequestBody CambiarPasswordDTO cambiarPasswordDTO) throws Exception{
         pacienteServicio.cambiarPassword(cambiarPasswordDTO);
@@ -82,6 +86,11 @@ public class PacienteController {
     @GetMapping("/filtrar-citas-por-medico")
     public ResponseEntity<MensajeDTO <List<ItemCitaPendientePacienteDTO>>> filtrarCitasPorMedico(@Valid @RequestBody FiltroBusquedaDTO filtroBusquedaDTO) throws Exception{
         return ResponseEntity.ok().body(new MensajeDTO<>(false, pacienteServicio.filtrarCitasPorMedico(filtroBusquedaDTO)));
+    }
+
+    @GetMapping("/listar-medicos-especialidad")
+    public ResponseEntity<MensajeDTO <List<ItemCitaPendientePacienteDTO>>> filtrarCitasPorMedico(@Valid @RequestBody MedicoEspecialidadDTO especialidadDTO) throws Exception{
+        return ResponseEntity.ok().body(new MensajeDTO<>(false, pacienteServicio.listarMedicosEspecialidad(especialidadDTO)));
     }
 
     @GetMapping("/detalle/{codigo}")

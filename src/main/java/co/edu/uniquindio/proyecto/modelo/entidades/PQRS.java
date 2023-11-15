@@ -44,7 +44,7 @@ public class PQRS implements Serializable {
     @ManyToOne
     private Cita cita;
 
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     @OneToMany(mappedBy = "codigoPqrs")
     @ToString.Exclude
     private List<Mensaje> mensajeList;
