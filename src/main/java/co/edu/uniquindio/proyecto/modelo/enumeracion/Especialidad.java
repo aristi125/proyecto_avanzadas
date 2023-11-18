@@ -1,5 +1,8 @@
 package co.edu.uniquindio.proyecto.modelo.enumeracion;
 
+import lombok.Getter;
+
+@Getter
 public enum Especialidad {
     CARDIOLGIA ("Cardiologia"),
     NEUTROLOGIA ("Neurologia"),
@@ -14,7 +17,4 @@ public enum Especialidad {
         this.especialidad = especialidad;
     }
 
-    public String getEspecialidad() {
-        return especialidad;
-    }
 }

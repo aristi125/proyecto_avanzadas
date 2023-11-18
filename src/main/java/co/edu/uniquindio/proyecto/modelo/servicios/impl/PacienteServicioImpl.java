@@ -10,9 +10,11 @@ import co.edu.uniquindio.proyecto.modelo.repositorios.*;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.PacienteServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,7 @@ public class PacienteServicioImpl implements PacienteServicio {
         paciente.setAlergias(registroPacienteDTO.alergias());
         paciente.setEps(registroPacienteDTO.eps());
         paciente.setTipoSangre(registroPacienteDTO.tipoSangre());
+        paciente.setEstado(Estado.ACTIVO);
 
         //GURADAMOS AL PACIENTE
         Paciente pacienteNuevo = pacienteRepo.save(paciente);
@@ -107,6 +110,7 @@ public class PacienteServicioImpl implements PacienteServicio {
             buscado.setAlergias(detallePacienteDTO.alergias());
             buscado.setEps(detallePacienteDTO.eps());
             buscado.setTipoSangre(detallePacienteDTO.tipoSangre());
+            buscado.setEstado(detallePacienteDTO.estado());
         }
 
         //como el objeto paciente ya tiene un id, el metodo save() no crea un nuevo registro
@@ -127,9 +131,11 @@ public class PacienteServicioImpl implements PacienteServicio {
 
         Paciente paciente = pacienteOptional.get();
 
-        if (paciente.getEstadoUsuario().equals(Estado.ACTIVO)){
-            paciente.setEstadoUsuario(Estado.INACTIVO);
+        if (paciente.getEstado().equals(Estado.ACTIVO)){
+            paciente.setEstado(Estado.INACTIVO);
             pacienteRepo.save(paciente);
+        }else {
+            throw new Exception(("No se que esta pasandos"));
         }
 
     }
@@ -164,27 +170,14 @@ public class PacienteServicioImpl implements PacienteServicio {
     @Override
     public int agendarCita(AgendarCitaPacienteDTO agendarCitaPacienteDTO) throws Exception {
 
-        Paciente paciente = pacienteRepo.findByCedula(agendarCitaPacienteDTO.cedulaPaciente());
-        Medico medico = medicoRepo.findByCedula(agendarCitaPacienteDTO.cedulaMedico());
-
-        if (!(agendarCitaPacienteDTO.cedulaPaciente().equals(paciente.getCedula()))){
-            throw new Exception("No existe un paciente con el codigo " + agendarCitaPacienteDTO.cedulaPaciente());
-        }
-
-        if (!(medico.getCedula().equals(agendarCitaPacienteDTO.cedulaMedico()))){
-            throw new Exception("No existe un medico con el codigo "+ agendarCitaPacienteDTO.cedulaMedico());
-        }
-
         Cita c = new Cita();
         Paciente pacientes = new Paciente();
 
-        if (agendarCitaPacienteDTO.cedulaPaciente().equals(pacientes.getCedula()) &&
-                verificarCitaHorarioMedico(agendarCitaPacienteDTO) == false) {//validar que la fecha de la cita sí esté dentro del horario del médico
+        if (verificarCitaHorarioMedico(agendarCitaPacienteDTO) == false) {//validar que la fecha de la cita sí esté dentro del horario del médico
 
             if (pacientes.getCitaPacienteList().size() <= 3) {
-
-                c.setPaciente(paciente);
-                c.setMedico(medico);
+                c.getPaciente().setCodigo(agendarCitaPacienteDTO.codigoMedico());
+                c.getMedico().setCodigo(agendarCitaPacienteDTO.codigoMedico());
                 c.setFechaCita(agendarCitaPacienteDTO.fechaCita());
                 c.setEstado(EstadoCita.PROGRAMADA);
                 c.setFechaCreacion(LocalDateTime.now());
@@ -228,17 +221,15 @@ public class PacienteServicioImpl implements PacienteServicio {
 
     private boolean verificarCruceOtraCita(AgendarCitaPacienteDTO agendarCitaPacienteDTO) {
 
-        Paciente paciente = new Paciente();
-        List<Paciente> pacienteList = new ArrayList<>();
-        LocalDateTime cruceCita = null;
+        LocalDateTime fechaCita = null;
+        fechaCita = agendarCitaPacienteDTO.fechaCita();
 
-        for (Paciente p: pacienteList){
-             cruceCita = p.getCitaPacienteList().get(0).getFechaCita();
+        List <Cita> citasPaciente = citaRepo.obtenerCitasFecha(agendarCitaPacienteDTO.codigoPaciente(), fechaCita.toLocalDate());
+
+        if(!citasPaciente.isEmpty()){
+            return  true;
         }
 
-        if (agendarCitaPacienteDTO.fechaCita().isEqual(cruceCita)){
-            return true;
-        }
 
         return false;
     }
@@ -470,7 +461,8 @@ public class PacienteServicioImpl implements PacienteServicio {
                 buscado.getAlergias(),
                 buscado.getCiudad(),
                 buscado.getEps(),
-                buscado.getTipoSangre());
+                buscado.getTipoSangre(),
+                buscado.getEstado());
     }
 
 }

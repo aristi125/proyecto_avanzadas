@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyecto.dto.paciente;
 
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Ciudad;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EPS;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.TipoSangre;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;

@@ -17,12 +17,6 @@ public class PacienteController {
 
     private final PacienteServicio pacienteServicio;
 
-    @PostMapping("/registrar")
-    public ResponseEntity<MensajeDTO<String>> registrarse(@Valid @RequestBody RegistroPacienteDTO registroPacienteDTO) throws Exception{
-        pacienteServicio.registrarse(registroPacienteDTO);
-        return ResponseEntity.ok().body(new MensajeDTO<>(false, "Se registro correctamente el paciente"));
-    }
-
     @PutMapping("/editar-perfil")
     public ResponseEntity<MensajeDTO<String>> editarPerfil(@Valid @RequestBody DetallePacienteDTO pacienteDTO) throws Exception{
         pacienteServicio.editarPerfil(pacienteDTO);
@@ -57,8 +51,8 @@ public class PacienteController {
         return ResponseEntity.ok().body(new MensajeDTO<>(false,"Se creo correctamente la PQRS"));
     }
 
-    @GetMapping("/listar-pqrs-paciente")
-    public ResponseEntity<MensajeDTO <List<ItemPQRSDTO>>> listarPQRSPaciente(int codigo) throws Exception{
+    @GetMapping("/listar-pqrs/{codigo}")
+    public ResponseEntity<MensajeDTO <List<ItemPQRSDTO>>> listarPQRSPaciente(@PathVariable int codigo) throws Exception{
         return ResponseEntity.ok().body(new MensajeDTO<>(false,pacienteServicio.listarPQRSPaciente(codigo)));
     }
 

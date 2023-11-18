@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Medico extends Usuario implements Serializable {
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
 
@@ -27,7 +27,6 @@ public class Medico extends Usuario implements Serializable {
     @OneToMany(mappedBy = "codigoMedico")
     private List<DiaLibre> dia_libreList;
 
-    //@JoinColumn(nullable = false)
     @OneToMany(mappedBy = "codigoMedico")
     private List<HorarioMedico> horarioMedicoList;
 }

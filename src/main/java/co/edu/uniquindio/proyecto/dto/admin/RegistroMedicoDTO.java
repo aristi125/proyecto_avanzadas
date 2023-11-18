@@ -17,10 +17,10 @@ public record RegistroMedicoDTO(
         @NotBlank @Length(max = 10)
         String cedula,
 
-        @NotNull @Min(0) @Max(3)
+        @NotNull
         Ciudad ciudad,
 
-        @NotNull @Min(0) @Max(5)
+        @NotNull
         Especialidad especialidad,
 
         @NotBlank @Length(max = 20)

@@ -17,19 +17,16 @@ import java.time.LocalTime;
 public class HorarioMedico implements Serializable {
     //LLAVE PRIMARIA
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int codigo;
 
-    @Column(nullable = false)
     private String dia;
 
-    @Column(nullable = false)
     private LocalTime horaInicio;
 
-    @Column(nullable = false)
     private LocalTime horaFin;
 
     //LLAVES FORANEAS
-    @JoinColumn(nullable = false)
     @ManyToOne
     private Medico codigoMedico;
 }

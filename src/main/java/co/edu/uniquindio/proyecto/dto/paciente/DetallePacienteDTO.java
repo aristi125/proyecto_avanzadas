@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyecto.dto.paciente;
 
 import co.edu.uniquindio.proyecto.modelo.enumeracion.Ciudad;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.EPS;
+import co.edu.uniquindio.proyecto.modelo.enumeracion.Estado;
 import co.edu.uniquindio.proyecto.modelo.enumeracion.TipoSangre;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,9 +22,9 @@ import java.time.LocalDate;
         String cedula,
         @NotNull
         String telefono,
-        @NotEmpty
+        @NotNull
         String urlfoto,
-        @NotEmpty
+       // @NotEmpty
         LocalDate fechaNacimiento,
         @NotNull
         String alergias,
@@ -32,6 +33,9 @@ import java.time.LocalDate;
         @NotNull
         EPS eps,
         @NotNull
-        TipoSangre tipoSangre
+        TipoSangre tipoSangre,
+
+        @NotNull
+        Estado estado
 ) {
 }

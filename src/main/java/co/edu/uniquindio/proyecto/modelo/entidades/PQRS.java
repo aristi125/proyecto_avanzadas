@@ -21,7 +21,6 @@ public class PQRS implements Serializable {
     //LLAVE PRIMARIA
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ToString.Include
     private int codigo;
 
     @Column(nullable = false)

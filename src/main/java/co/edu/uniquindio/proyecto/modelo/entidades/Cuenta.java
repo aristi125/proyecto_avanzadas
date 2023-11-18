@@ -15,6 +15,7 @@ import java.util.List;
 public class Cuenta implements Serializable {
     //LLAVE PRIMARIA
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int codigo;
 
     @Column(nullable = false, length = 100)

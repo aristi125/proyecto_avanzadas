@@ -1,5 +1,8 @@
 package co.edu.uniquindio.proyecto.modelo.enumeracion;
 
+import lombok.Getter;
+
+@Getter
 public enum Ciudad {
     ARMENIA ("Armenia"),
     BOGOTA ("Bogota"),
@@ -13,7 +16,4 @@ public enum Ciudad {
         this.nombre = nombre;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
 }
