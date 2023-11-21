@@ -13,6 +13,6 @@ public interface MedicoServicio {
     List<HistorialPacienteDTO> listasUnaCitasPaciente(int codigo) throws Exception; //historial medico
     int agendarDiaLibre(DiaLibreDTO diaLibreDTO) throws Exception;
     //TENGO DUDAS SI ESTA BIEN
-    List<HistorialPacienteDTO> listarTodasCitasPacientes(int codigo) throws Exception;
+    List<ItemCitasActualDTOMedico> listarTodasCitasPacientes(int codigo) throws Exception;
 
 }

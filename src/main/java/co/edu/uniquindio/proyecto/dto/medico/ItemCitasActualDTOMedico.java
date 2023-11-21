@@ -20,7 +20,9 @@ public record ItemCitasActualDTOMedico(
         String nombrePaciente,
 
         String urlFoto,
+        @NotNull
         EstadoCita estadoCita,
+        @NotNull
         EPS eps
 
 

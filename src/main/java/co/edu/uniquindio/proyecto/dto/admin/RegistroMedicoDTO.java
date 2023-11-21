@@ -31,7 +31,7 @@ public record RegistroMedicoDTO(
         String password,
         @NotNull
         String urlFoto,
-        @NotEmpty
+        //@NotEmpty
         List<HorarioDTO> horarios
 ) {
 }

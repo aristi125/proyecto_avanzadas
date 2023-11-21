@@ -135,7 +135,7 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
 
     @Override
-    public List<HistorialPacienteDTO> listarTodasCitasPacientes(int codigo) throws Exception {
+    public List<ItemCitasActualDTOMedico> listarTodasCitasPacientes(int codigo) throws Exception {
 
         Optional<Medico> opcional = medicoRepo.findById(codigo);
         List<Cita> citasHistorial= citaRepo.obtenerHistorialPaciente(codigo);
@@ -145,18 +145,17 @@ public class MedicoServicioImpl implements MedicoServicio {
         }
 
         Medico paciente = opcional.get();
-        List<HistorialPacienteDTO> respuesta = new ArrayList<>();
+        List<ItemCitasActualDTOMedico> respuesta = new ArrayList<>();
 
         for (Cita c : citasHistorial) {
 
-            respuesta.add(new HistorialPacienteDTO(
+            respuesta.add(new ItemCitasActualDTOMedico(
                     c.getCodigo(),
-                    c.getPaciente().getNombre(),
                     c.getPaciente().getCedula(),
-                    c.getAtencion().getTratamiento(),
-                    c.getAtencion().getDiagnostico(),
-                    c.getAtencion().getNotasMedicas(),
-                    c.getMotivo()));
+                    c.getPaciente().getNombre(),
+                    c.getPaciente().getUrlFoto(),
+                    c.getEstado(),
+                    c.getPaciente().getEps()));
 
         }
 

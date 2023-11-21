@@ -1,10 +1,7 @@
 package co.edu.uniquindio.proyecto.controladores;
 
 import co.edu.uniquindio.proyecto.dto.MensajeDTO;
-import co.edu.uniquindio.proyecto.dto.medico.AtenderConsultaPacienteDTO;
-import co.edu.uniquindio.proyecto.dto.medico.DiaLibreDTO;
-import co.edu.uniquindio.proyecto.dto.medico.HistorialPacienteDTO;
-import co.edu.uniquindio.proyecto.dto.medico.ItemCitasPendienteDTOMedico;
+import co.edu.uniquindio.proyecto.dto.medico.*;
 import co.edu.uniquindio.proyecto.modelo.servicios.interfaces.MedicoServicio;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +39,7 @@ public class MedicoController {
         return ResponseEntity.ok().body(new MensajeDTO<>(false, "Se agendo correctamente la cita"));
     }
     @GetMapping("/listar-todas-citas-pacientes/{codigo}")
-    public ResponseEntity<MensajeDTO<List<HistorialPacienteDTO>>> listarTodasCitasPacientes( @PathVariable int codigo) throws Exception {
+    public ResponseEntity<MensajeDTO<List<ItemCitasActualDTOMedico>>> listarTodasCitasPacientes(@PathVariable int codigo) throws Exception {
         return ResponseEntity.ok().body(new MensajeDTO<>(false, medicoServicio.listarTodasCitasPacientes(codigo)));
     }
 }

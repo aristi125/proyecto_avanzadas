@@ -6,10 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record   HorarioDTO(
-        @NotNull
-        String dia,
 
-        LocalTime horaIncio,
-        LocalTime horaSalida
+        String hora
 ) {
 }

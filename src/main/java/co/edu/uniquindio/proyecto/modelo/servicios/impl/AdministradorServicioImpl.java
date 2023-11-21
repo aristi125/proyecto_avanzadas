@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,9 +78,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         for (HorarioDTO h : horarios){
             HorarioMedico hm = new HorarioMedico();
-            hm.setDia(h.dia());
-            hm.setHoraInicio(h.horaIncio());
-            hm.setHoraFin(h.horaSalida());
+            hm.setHora(h.hora());
 
             //GUARDAMOS LOS HORARIOS ASIGNADOS AL MEDICO
             horarioRepo.save(hm);
@@ -217,9 +214,7 @@ public class AdministradorServicioImpl implements AdministradorServicio {
         for(HorarioMedico h: horarios){
 
             horariosDTO.add( new HorarioDTO(
-                    h.getDia(),
-                    h.getHoraInicio(),
-                    h.getHoraFin()));
+                    h.getHora()));
 
         }
 

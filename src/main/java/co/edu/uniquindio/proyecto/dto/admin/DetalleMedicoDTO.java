@@ -26,7 +26,7 @@ public record DetalleMedicoDTO(
         String correo,
         @NotEmpty
         String urlFoto,
-        @NotEmpty
+        //@NotEmpty
         List<HorarioDTO> horarios
 ) {
 }
